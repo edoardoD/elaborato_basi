@@ -86,17 +86,7 @@ CREATE TABLE `eventi` (
 -- Dump dei dati per la tabella `eventi`
 --
 
-INSERT INTO `eventi` (`id_evento`, `id_visita`, `data`, `prezzo`) VALUES
-(1, 1, '2023-05-01', 15),
-(2, 2, '2023-05-02', 20),
-(3, 3, '2023-05-03', 25),
-(4, 4, '2023-05-04', 10),
-(5, 5, '2023-05-05', 18),
-(6, 6, '2023-05-06', 22),
-(7, 7, '2023-05-07', 30),
-(8, 8, '2023-05-08', 27),
-(9, 9, '2023-05-09', 12),
-(10, 10, '2023-05-10', 35);
+
 
 -- --------------------------------------------------------
 
@@ -119,16 +109,7 @@ CREATE TABLE `gruppi` (
 --
 
 INSERT INTO `gruppi` (`id_gruppo`, `id_evento`, `ora_inizio`, `id_guida`, `lingua`, `min_visitatori`, `max_visitatori`) VALUES
-(1, 1, '10:00:00', 1, 'Inglese', 5, 20),
-(2, 2, '11:00:00', 2, 'Italiano', 6, 15),
-(3, 3, '14:00:00', 3, 'Francese', 7, 25),
-(4, 4, '15:00:00', 4, 'Spagnolo', 4, 10),
-(5, 5, '16:00:00', 5, 'Portoghese', 8, 18),
-(6, 6, '17:00:00', 6, 'Tedesco', 5, 12),
-(7, 7, '10:30:00', 7, 'Arabo', 10, 30),
-(8, 8, '11:30:00', 8, 'Russo', 5, 15),
-(9, 9, '14:30:00', 9, 'Olandese', 8, 20),
-(10, 10, '15:30:00', 10, 'Ceco', 15, 40);
+
 
 -- --------------------------------------------------------
 
@@ -179,18 +160,6 @@ CREATE TABLE `membri` (
 -- Dump dei dati per la tabella `membri`
 --
 
-INSERT INTO `membri` (`id_gruppo`, `id_visitatore`, `tipo_pagamento`, `descr_pagamento`, `data_pagamento`) VALUES
-(1, 2, 'Carta di credito', 'Pagamento effettuato tramite carta di credito Visa', '2023-04-16 10:30:00'),
-(1, 8, 'Carta di credito', 'Pagamento effettuato tramite carta di credito Mastercard', '2023-04-12 14:20:00'),
-(1, 9, 'Bonifico bancario', 'Pagamento effettuato tramite bonifico bancario', '2023-04-07 14:30:00'),
-(2, 1, 'Contanti', 'Pagamento effettuato in contanti', '2023-04-10 19:15:00'),
-(2, 5, 'Bonifico bancario', 'Pagamento effettuato tramite bonifico bancario', '2023-04-15 15:45:00'),
-(2, 10, 'Assegno', 'Pagamento effettuato tramite assegno bancario', '2023-04-06 17:15:00'),
-(3, 6, 'Carta di credito', 'Pagamento effettuato tramite carta di credito Visa', '2023-04-09 12:30:00'),
-(3, 7, 'PayPal', 'Pagamento effettuato tramite PayPal', '2023-04-13 09:30:00'),
-(4, 3, 'Assegno', 'Pagamento effettuato tramite assegno circolare', '2023-04-11 11:30:00'),
-(4, 4, 'PayPal', 'Pagamento effettuato tramite PayPal', '2023-04-08 11:45:00');
-
 -- --------------------------------------------------------
 
 --
@@ -210,17 +179,6 @@ CREATE TABLE `visitatori` (
 -- Dump dei dati per la tabella `visitatori`
 --
 
-INSERT INTO `visitatori` (`id_visitatore`, `nominativo`, `nazionalita`, `telefono`, `email`, `lingua_base`) VALUES
-(1, 'Giuseppe Bianchi', 'Italiana', '3331234567', 'giuseppe.bianchi@gmail.co', 'Italiano'),
-(2, 'Maria Rossi', 'Italiana', '3352345678', 'maria.rossi@hotmail.com', 'Italiano'),
-(3, 'Antonio Verdi', 'Italiana', '3333456789', 'antonio.verdi@gmail.com', 'Italiano'),
-(4, 'Giovanni Neri', 'Italiana', '3394567890', 'giovanni.neri@gmail.com', 'Italiano'),
-(5, 'Anna Bianchi', 'Italiana', '3385678901', 'anna.bianchi@hotmail.com', 'Italiano'),
-(6, 'Lorenzo Rossi', 'Italiana', '3346789012', 'lorenzo.rossi@gmail.com', 'Italiano'),
-(7, 'Francesca Verdi', 'Italiana', '3397890123', 'francesca.verdi@hotmail.c', 'Italiano'),
-(8, 'Simone Neri', 'Italiana', '3338901234', 'simone.neri@gmail.com', 'Italiano'),
-(9, 'Chiara Bianchi', 'Italiana', '3389012345', 'chiara.bianchi@hotmail.co', 'Italiano'),
-(10, 'Marco Rossi', 'Italiana', '3350123456', 'marco.rossi@gmail.com', 'Italiano');
 
 -- --------------------------------------------------------
 
@@ -238,18 +196,6 @@ CREATE TABLE `visite` (
 --
 -- Dump dei dati per la tabella `visite`
 --
-
-INSERT INTO `visite` (`id_visita`, `denominazione`, `luogo`, `durata_media`) VALUES
-(1, 'Museo Egizio', 'Torino', 120),
-(2, 'Museo Nazionale Romano', 'Roma', 180),
-(3, 'Galleria degli Uffizi', 'Firenze', 150),
-(4, 'Museo Archeologico Nazionale', 'Napoli', 90),
-(5, 'Museo del Prado', 'Madrid', 120),
-(6, 'British Museum', 'Londra', 180),
-(7, 'Museo del Louvre', 'Parigi', 150),
-(8, 'Metropolitan Museum of Art', 'New York', 120),
-(9, 'National Gallery', 'Londra', 90),
-(10, 'Vatican Museums', 'Città del Vaticano', 180);
 
 --
 -- Indici per le tabelle scaricate
