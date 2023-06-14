@@ -88,6 +88,20 @@ VALUES
   (12, 'Francese', 'B2'),
   (2, 'Italiano', 'C1');
 
+INSERT INTO `visite` (`id_visita`, `denominazione`, `luogo`, `durata_media`)
+VALUES
+(1, 'Tour del Colosseo', 'Roma', 120),
+(2, 'Visita alla Galleria degli Uffizi', 'Firenze', 90),
+(3, 'Tour della Torre Eiffel', 'Parigi', 60),
+(4, 'Escursione al Grand Canyon', 'Arizona', 180),
+(5, 'Visita al Museo del Louvre', 'Parigi', 120),
+(6, 'Tour della Città Proibita', 'Pechino', 150),
+(7, 'Escursione alle Cascate del Niagara', 'Ontario', 240),
+(8, 'Visita al Museo del Prado', 'Madrid', 90),
+(9, 'Tour della Cattedrale di San Pietro', 'Città del Vaticano', 60),
+(10, 'Escursione alla Grande Muraglia', 'Pechino', 180);
+
+
 -- Inserimento degli eventi per ogni visita
 -- Visita con id_visita = 1
 INSERT INTO `eventi` (`id_evento`, `id_visita`, `data`, `prezzo`)
