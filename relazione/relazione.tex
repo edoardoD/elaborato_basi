@@ -9,7 +9,12 @@
 \usepackage{appendix}
 \usepackage[italian]{cleveref}
 \usepackage{xcolor}
+\usepackage{microtype}
+\usepackage{array}
+\usepackage{adjustbox}
+\usepackage{tabularx}
 
+\graphicspath{{./img}}
 \title{Elaborato Basi di Dati}
 \author{Desiderio Edoardo}
 \begin{document}
@@ -27,11 +32,11 @@ Ogni	visita,	opportunamente	descritta,	ha	un	 titolo	 (diverse	visite	hanno	un	 
 “Musei	Vaticani	e	Cappella	Sistina”,	“Sito	archeologico	di	Pompei”,	“Galleria	degli	uffizi”,	ecc.),	la	
 sua	durata	media		e	il	luogo		in	cui	essa	si	svolge.	Ogni	visita	può	avere	luogo	più	volte	nel	tempo	
 secondo	specifici	eventi	programmati.
-Gli	eventi,	di	cui	viene	indicato	il	prezzo,	vengono	prenotati	da	gruppi	di	persone	condotti	da	una	
+Le escursioni,	di	cui	viene	indicato	il	prezzo,	vengono	prenotati	da	gruppi	di	persone	condotti	da	una	
 guida	che	illustra	il	percorso	in	una	determinata	lingua;	per	ogni	gruppo	viene	fissata	l’ora	di	inizio	
 della	visita	ed	un	numero	minimo	e	massimo	di	partecipanti.
 La	società	si	avvale	di	diverse	guide	ognuna	delle	quali	ha	competenze	in	una	o	più	lingue	ad	uno	
-specifico	 livello	 di	 conoscenza	 ("B2","C1","C2").	 	 Di	 ogni	 guida	 si	 vuole	
+specifico	 livello	 di	 conoscenza	 ("B2","C1","C2"). Di	 ogni	 guida	 si	 vuole	
 conoscere	 alcuni	 dati	 tra	 i	 quali	 nome,	 sesso,	 data	 di	 nascita,	 titolo	 di	 studio	 e	 relativo	 anno	 di	
 conseguimento
 I	visitatori,	di	cui	si	vuole	conoscere	almeno	nome,	nazionalità,	lingua	base,	e-mail	e	un	 recapito	
@@ -40,9 +45,24 @@ visitatore,	 nel	 tempo,	 può	 partecipare	 a	 gruppi	 diversi	 usando	 ogni	 v
 pagamento	(non	necessariamente	sempre	la	stessa	es.	carta	di	credito,	paypal,	bonifico	bancario)	
 della	quale	si	deve	prevedere	la	memorizzazione:	tipologia,	descrizione	e	data	del	pagamento.
 Il	 sito	 web	 della	 società	 consente	 la	 visione	 pubblica	 delle	 visite	 organizzate	 e,	 solo	 agli	 utenti	
-preventivamente	registrati,	la	prenotazione	di	una	specifica	visita
+preventivamente	registrati,	la	prenotazione	di	una	specifica	visita. In fine l'applicatiov
+deve permettere una visione protetta dei dati, quindi non tutti gli utenti ad esempio possono
+visionare i gruppi a cui sono affidate le guide 
+
 
 \section{Rilevamento delle ambiguità e correzioni proposte}
+Il testo dell'intervista presenta molte ambiguità. Le principali sono
+\begin{itemize}
+    \item utilizzo di sinonimi
+    \item Elenchi di attributi incompleti
+    \item Cartdinalità non specificate
+\end{itemize}
+
+Gli attributi parziali e le cardinalità verranno risolti mediante l'uso della logica in fase di creazione dello schema concettuale.
+Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei termini
+
+
+
 una società operante nel settore del turismo offre tra i suoi servizi l’orga-
 nizzazione di visite guidate a siti di interesse storico-culturale.
 \textcolor{red}{ Ogni visita,
@@ -78,7 +98,38 @@ registrati, la prenotazione di una specifica visita}
 % \textcolor{violet}{colore} 
 % \textcolor{lime}{diverso} 
 % \textcolor{pink}{per} \textcolor{gray}{parola}
+\subsection*{ipotesi aggiuntive}
+dall'intervista fatta si concretizza che:
+\begin{itemize}
+    \item il dato relativo alla durata media di una visita venga espesso in minuti
+    \item  per	uno	specifico	evento	di	visita	guidata	possano	essere	formati	anche	più	gruppi		ognuno	
+    col	proprio	orario,	accompagnatore	e	lingua; 
+    \item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o	 più	 eventi	 debbono	 registrarsi	 sul	 sito	 della	
+    società	 fornendo	 e-mail	 e	 recapito	 telefonico.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione	
+    relativamente	 agli	 utenti	 anonimi:	 essi	 possono	 operare	 solo	 per	 funzionalità	 limitate	 di	
+    interrogazione	per	vedere	i	dati	degli	eventi	programmati;
+    \item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente	ad	uno	specifico	evento,	nei	limiti	
+    della	 disponibilità	 di	 posti,	 ogni	 visitatore	 registrato	 effettui	 il	 pagamento	 tramite	 carta	 di	
+    credito	 (con	 codice	 della	 medesima),	 via	 PayPal	 (l’utente	 deve	 essere	 registrato	 a	 tale	
+    servizio),	 o	 tramite	 bonifico	 bancario	 di	 cui	 deve	 fornire	 gli	 estremi	 utilizzando	 il	 campo	
+    relativo	alla	descrizione	del	pagamento;
+    \item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
+    suscettibile	di	variazioni	nel	tempo
+    \item per gli utenti con età minore o uguale ai 12 anni è prevista una scontistica del prezzo da un 10 ad un massimo del 20 percento in base ai
+    periodi promozionali
+\end{itemize}
 
+\subsection*{visite ed eventi}
+si possono definire le visite come i siti di interesse che la compagnia di turismo 
+ha come partner per trovare collocazione ad eventi diversi. si vuole modellare quindi la 
+possibilità di far combaciare più eventi per la stessa visita in tempi e anni diversi
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.99\textwidth]{visita-evento.png}
+    \caption[short]{una visita può istanziare più eventi metre 
+    un evento riferisce per una determinata visita}
+    
+\end{figure}
 \section{Definizione delle specifiche in linguaggio naturale ed estrazione dei concetti principali}
 \newpage
 \chapter{Progettazione concettuale}
