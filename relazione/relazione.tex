@@ -88,7 +88,7 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                                   \\
 			\hline
 			visite                 & logo di interesse con cui ha accordi la società di turismo                 & sito culturale             & eventi                                           \\
-			\hlinee
+			\hline
 		\end{tabularx}
 		\caption{\label{glossario:termini}} termini rappresentativi dell' intervista
 	\end{center}
@@ -102,7 +102,7 @@ dall'intervista fatta si concretizza che:
 	\item  per	uno	specifico	evento	di	visita	guidata	possano	essere	formati	anche	più	gruppi		ognuno
 	      col	proprio	orario,	accompagnatore	e	lingua;
 	\item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o	 più	 eventi	 debbono	 registrarsi	 sul	 sito	 della
-	      società	 fornendo	 e-mail	 e	 recapito	 telefonico.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione
+	      società	 fornendo	 e-mail	 e	 password.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione
 	      relativamente	 agli	 utenti	 anonimi:	 essi	 possono	 operare	 solo	 per	 funzionalità	 limitate	 di
 	      interrogazione	per	vedere	i	dati	degli	eventi	programmati;
 	\item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente	ad	uno	specifico	evento,	nei	limiti
@@ -113,38 +113,65 @@ dall'intervista fatta si concretizza che:
 	\item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
 	      suscettibile	di	variazioni	nel	tempo
 	\item per definire "gratuito" il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%
-	\item ogni guida ha un turno, che sia o turno mattino nella fascia oraria 9-13 o pomeridiano 14-18
 \end{itemize}
 
 
 
 \section{Definizione delle specifiche in linguaggio naturale ed estrazione dei concetti principali}
-qui di seguito si riporta in maniera più sunta parti del problema per evidenziarne i vari concetti principali.
 
-\textcolor{red}{una società offre l'organizzazione di visite guidate. Ciascuna di esse ha luogo
-	in un \textbf{\underline{sito}}
-	di interesse opportunamente descritto da: none, la sua durata media e il luogo.
-	Ogni visita può avvenire più volte nel tempo secondo specifici eveni programmati.
-}
+Di seguito si riporta un testo riassuntivo in cui sono evidenziati i concetti chiave
+dell’intervista filtrati dalle ambiguità possibili, in modo da avere un’ idea più chiara di
+quelle che saranno le entità presenti nello schema concettuale.\\\\
+La società commissionatrice vuole creare la gestione informatizzata dei suoi servizi.\\\\
+Ogni \textbf{\underline{visita}}, intesa come il sito culturale è oppurtunatamente descritta definendo 
+il titolo, luogo, identificativo, descrizione, durata media espressa in minuti.\\\\ 
+Per ogni visità la società organizza degli eventi. Ogni \textbf{\underline{evento}} può ripetersi più volte 
+rispetto ad una determinata visita e ne viene definito il prezzo indicato che può variare nel tempo; si vuole memorizzare anche 
+la data dell'evento.
+\\\\
+I \textbf{\underline{clienti}}, di cui si salvano lingua preferenza e dati principali una password e mail per accedere a funzionalità
+più avanzate per la prenotazione di biglietti ecc, vengono assegnati a gruppi differenti in base alle loro preferenze 
+proposte  al momento dell'acquisto dei \textbf{biglietti}. Per gestire i pagamenti il cliente potrà aggiungere al carrello i biglietti che intende
+acquistare per poi procedere al pagamento utilizzando quello che più preferisce (paypall, bonifico, carta di credito) \\\\
+Dei \textbf{\underline{Gruppi
+}} si vuole indicare l'orario di inizio della visita si vuole specificare 
+il minnimo numero di persone da cui deve essere composto un gurppo e il massimo, bisogna valutare
+se è conveniente salvare anche il numero di iscritti correnti o lasciare il dato deducibile.\\\\
+I \textbf{\underline{biglietti}} devono essere acquistati dall'utente, siccome ogni utente può acquistare biglietti acnhe per altre persone 
+ogni biglietto deve specificare il nome e il cognome e l'età della persona per cui 
+viene acquistato il biglietto siccome sono previste fasce di sconto in base all'età.
+Rispettivamente \(eta \le 12 \rightarrow\)  100\%, \(12 < eta \le 14 \rightarrow\)  20\%, \(eta >50 \rightarrow\)  10\%.
+per ogni nuovo evento vengono emessi biglietti pari al numero minimo di partecipanti di un gruppo\\\\
 
-\textcolor{blue}{Le escursioni o \underline{eventi} di cui viene indicata la data e il prezzo vengono
-	indette in base alle disponibilità e il loro prezzo può variare in base al periodo e
-	le norme contrattuali fatte fra la società e il sito di interesse.
-}
-\textcolor{teal}{
-	Agli eventi programmati si partecipa in \underline{gruppi}, questi hanno un massimo e un minomo di clienti che
-	possono contenere e sono gestiti da un esperto che mostrerà il sito nella lingua richiesta dal gruppo di persone.
-	Per ogni gurppo viene fissata l'ora di inzio.
-}
-\textcolor{orange}{La società si avvale di diverse \underline{guide} . Di queste oltre i dati anagrafici è importante sapere quali sono
-	le lingue di loro \underline{competenza} e il loro grado di preparazione, si assuma che ogni guida possa conoscere più lingue.
-	Il grado di preparazione va inteso in ordine crescente di specializzazione B2,C1,C2.
-	Ogni guida esercita in dei \underline{turni} che possono essere mattinieri 9-13 o pomeridinai 14-18.}
-\textcolor{violet}{Ogni \underline{cliente} per partecipare deve
-	effettuare un pagamento  e la registrazione ad un gruppo in base alla lingua specificata
-	\underline{il pagamento} deve essere scelto fra quelli disponibili, si vuole inoltre
-	permettere l'acquisto di più biglietti poichè i minorenni non possono effettuare pagamenti}
-\textcolor{cyan}{}
+
+
+
+% qui di seguito si riporta in maniera più sunta parti del problema per evidenziarne i vari concetti principali.
+
+% \textcolor{red}{una società offre l'organizzazione di visite guidate. Ciascuna di esse ha luogo
+% 	in un \textbf{\underline{sito}}
+% 	di interesse opportunamente descritto da: none, la sua durata media e il luogo.
+% 	Ogni visita può avvenire più volte nel tempo secondo specifici eveni programmati.
+% }
+
+% \textcolor{blue}{Le escursioni o \underline{eventi} di cui viene indicata la data e il prezzo vengono
+% 	indette in base alle disponibilità e il loro prezzo può variare in base al periodo e
+% 	le norme contrattuali fatte fra la società e il sito di interesse.
+% }
+% \textcolor{teal}{
+% 	Agli eventi programmati si partecipa in \underline{gruppi}, questi hanno un massimo e un minomo di clienti che
+% 	possono contenere e sono gestiti da un esperto che mostrerà il sito nella lingua richiesta dal gruppo di persone.
+% 	Per ogni gurppo viene fissata l'ora di inzio.
+% }
+% \textcolor{orange}{La società si avvale di diverse \underline{guide} . Di queste oltre i dati anagrafici è importante sapere quali sono
+% 	le lingue di loro \underline{competenza} e il loro grado di preparazione, si assuma che ogni guida possa conoscere più lingue.
+% 	Il grado di preparazione va inteso in ordine crescente di specializzazione B2,C1,C2.
+% 	Ogni guida esercita in dei \underline{turni} che possono essere mattinieri 9-13 o pomeridinai 14-18.}
+% \textcolor{violet}{Ogni \underline{cliente} per partecipare deve
+% 	effettuare un pagamento  e la registrazione ad un gruppo in base alla lingua specificata
+% 	\underline{il pagamento} deve essere scelto fra quelli disponibili, si vuole inoltre
+% 	permettere l'acquisto di più biglietti poichè i minorenni non possono effettuare pagamenti}
+% \textcolor{cyan}{}
 % \textcolor{magenta}{domanda} 
 % \textcolor{olive}{con} 
 % \textcolor{teal}{un}
