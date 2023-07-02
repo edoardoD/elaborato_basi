@@ -2,3 +2,5 @@
 relazione/*
 !img/
 !*.tex
+.vscode/*
+!*.json
