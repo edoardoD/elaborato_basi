@@ -1,5 +1,12 @@
 {
     "ltex.language": "it",
+    "ltex.dictionary": {
+        "en-US": [
+            "upper",
+            "precomputed",
+            "subproblem"
+        ]        
+    },
     "ltex.enabled": [
         "latex",
         "markdown"
