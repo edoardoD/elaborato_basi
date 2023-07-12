@@ -5,10 +5,18 @@
             "upper",
             "precomputed",
             "subproblem"
-        ]        
+        ]
     },
     "ltex.enabled": [
         "latex",
         "markdown"
-    ]
+    ],
+    "texlab.latexFormatter": "texlab",
+    "texlab.formatterLineLength": 80,
+    "[latex]": {
+        "editor.wordBasedSuggestions": false,
+        "editor.suggest.snippetsPreventQuickSuggestions": true,
+        "editor.formatOnSave": true,
+        "editor.suggestSelection": "recentlyUsedByPrefix"
+    }
 }
