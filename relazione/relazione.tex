@@ -14,6 +14,7 @@
 \usepackage{adjustbox}
 \usepackage{tabularx}
 \usepackage{colortbl}
+\usepackage{pdfpages}
 \usepackage{listings}
 
 \lstdefinestyle{codeStyle}{
@@ -32,7 +33,8 @@
 
 
 
-\graphicspath{{./img}}
+
+\graphicspath{{./resources/img}}
 \title{Elaborato Basi di Dati}
 \author{Desiderio Edoardo}
 \begin{document}
@@ -229,8 +231,10 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 \newpage
 \chapter{Progettazione concettuale}
 \section{Schema scheletro}
+\includepdf[pages=1]{./resources/pdf/ER_turismo.pdf}
 \section{Raffinamenti proposti}
 \section{Schema concettuale finale}
+
 \newpage
 \chapter{Progettazione logica}
 \section{Stima del volume dei dati}
@@ -239,6 +243,10 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 \section{Raffinamento dello schema}
 \section{Analisi delle ridondanze}
 \section{Traduzione di entità e associazioni in relazioni}
+
+
+\section{Schema relazionale finale}
+\section{Traduzione delle operazioni in query SQL}
 \begin{lstlisting}[style=codeStyle,language=SQL]
 	CREATE TABLE `competenze` (
   	`id_guida` int(11) NOT NULL,
@@ -246,9 +254,6 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
   	`livello` varchar(15) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 \end{lstlisting}
-
-\section{Schema relazionale finale}
-\section{Traduzione delle operazioni in query SQL}
 \newpage
 \chapter{Progettazione dell'applicazione}
 \end{document}
