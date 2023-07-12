@@ -130,7 +130,7 @@ dall'intervista fatta si concretizza che:
 	      relativo	alla	descrizione	del	pagamento;
 	\item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
 	      suscettibile	di	variazioni	nel	tempo
-	\item per definire `gratuito' il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%		
+	\item per definire `gratuito' il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%
 \end{itemize}
 
 
@@ -180,57 +180,21 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 	\item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
 \end{itemize}
 
-
-
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.99\textwidth]{visita-evento.png}
-	\caption[]{una visita può istanziare più eventi mentre
-		un evento riferisce per una determinata visita}
-\end{figure}
-
-
-
-
-% qui di seguito si riporta in maniera più sunta parti del problema per evidenziarne i vari concetti principali.
-
-% \textcolor{red}{una società offre l'organizzazione di visite guidate. Ciascuna di esse ha luogo
-% 	in un \textbf{\underline{sito}}
-% 	di interesse opportunamente descritto da: none, la sua durata media e il luogo.
-% 	Ogni visita può avvenire più volte nel tempo secondo specifici eveni programmati.
-% }
-
-% \textcolor{blue}{Le escursioni o \underline{eventi} di cui viene indicata la data e il prezzo vengono
-% 	indette in base alle disponibilità e il loro prezzo può variare in base al periodo e
-% 	le norme contrattuali fatte fra la società e il sito di interesse.
-% }
-% \textcolor{teal}{
-% 	Agli eventi programmati si partecipa in \underline{gruppi}, questi hanno un massimo e un minomo di clienti che
-% 	possono contenere e sono gestiti da un esperto che mostrerà il sito nella lingua richiesta dal gruppo di persone.
-% 	Per ogni gurppo viene fissata l'ora di inzio.
-% }
-% \textcolor{orange}{La società si avvale di diverse \underline{guide} . Di queste oltre i dati anagrafici è importante sapere quali sono
-% 	le lingue di loro \underline{competenza} e il loro grado di preparazione, si assuma che ogni guida possa conoscere più lingue.
-% 	Il grado di preparazione va inteso in ordine crescente di specializzazione B2,C1,C2.
-% 	Ogni guida esercita in dei \underline{turni} che possono essere mattinieri 9-13 o pomeridinai 14-18.}
-% \textcolor{violet}{Ogni \underline{cliente} per partecipare deve
-% 	effettuare un pagamento  e la registrazione ad un gruppo in base alla lingua specificata
-% 	\underline{il pagamento} deve essere scelto fra quelli disponibili, si vuole inoltre
-% 	permettere l'acquisto di più biglietti poichè i minorenni non possono effettuare pagamenti}
-% \textcolor{cyan}{}
-% \textcolor{magenta}{domanda} 
-% \textcolor{olive}{con} 
-% \textcolor{teal}{un}
-% \textcolor{}{colore} 
-% \textcolor{lvioletime}{diverso} 
-% \textcolor{pink}{per} \textcolor{gray}{parola}
-
-
-
 \newpage
 \chapter{Progettazione concettuale}
+Per maggiore chiarezza, di seguito riportiamo i primi esempi di schemi concettuali
+divisi per ambiti. Partirò da parti di schema concettuale più semplici fino ad arrivare a parti più complesse
+\subsection*{Visita-Evento-Gruppo}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{evento-visita-gruppo.png}
+	\caption[]{caratterizzazione della gestione fra le visite, i vari eventi che può ospitare e i gruppi che vi partecipano}
+\end{figure}
+come quanto definito dal testo sono gay
+
+
 \section{Schema scheletro}
+
 \includepdf[pages=1]{./resources/pdf/ER_turismo.pdf}
 \section{Raffinamenti proposti}
 \section{Schema concettuale finale}
@@ -246,6 +210,7 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 
 
 \section{Schema relazionale finale}
+\newpage
 \section{Traduzione delle operazioni in query SQL}
 \begin{lstlisting}[style=codeStyle,language=SQL]
 	CREATE TABLE `competenze` (
