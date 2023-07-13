@@ -15,7 +15,7 @@
     "texlab.formatterLineLength": 80,
     "[latex]": {
         "editor.wordBasedSuggestions": false,
-        "editor.suggest.snippetsPreventQuickSuggestions": true,
+        "editor.suggest.snippetsPreventQuickSuggestions": false,
         "editor.formatOnSave": true,
         "editor.suggestSelection": "recentlyUsedByPrefix"
     }
