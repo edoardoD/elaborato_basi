@@ -190,7 +190,33 @@ divisi per ambiti. Partirò da parti di schema concettuale più semplici fino ad
 	\includegraphics[width=0.99\textwidth]{evento-visita-gruppo.png}
 	\caption[]{caratterizzazione della gestione fra le visite, i vari eventi che può ospitare e i gruppi che vi partecipano}
 \end{figure}
-come quanto definito dal testo sono gay
+Lo schema è piuttosto auto esplicativo, sono stati mantenuti i vincoli imposti
+dall'intervista come permettere l'Associazione di più eventi data una visita e 
+la partecipazione di più gruppi al determinato evento si noti come da un gruppo 
+si possa risalire ad un determinato evento e ad una determinata visita.
+\subsection*{Gerarchia persone, relazione fra gruppi guide e competenze}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{gruppo-guide.png}
+	\caption[]{l'entità gruppo è descritta nella figura sopra}
+\end{figure}
+
+Per gestire le entità CLIENTE, GUIDA poiché ave\-vano campi
+simili ho optato per una gerar\-chia di tipo totale ed Esclusiva 
+( DB\_MAIN non mostrava la scritta t, e)\-.
+Il resto dello schema E-R portato esplicita la modellazione di associare 
+più tipi di lingue ad una determinata guida. Lingua quindi è un'entità debole
+che necessita della chiave di GUIDA per essere completa. Adottando questo metodo
+per ogni gurppo posso risalire alla guida e con che lingua e a che livello sarà
+diretto.
+
+\subsection*{Biglietto-Ordine-Cliente}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{BIGLIETTO-ORDINE.png}
+\end{figure}
+
 
 
 \section{Schema scheletro}
