@@ -21,7 +21,6 @@ SET time_zone = "+00:00";
 -- Database: `visite_turistiche`
 --
 
--- --------------------------------------------------------
 
 --
 -- Struttura della tabella `competenze`
@@ -69,7 +68,7 @@ INSERT INTO `competenze` (`id_guida`, `lingua`, `livello`) VALUES
 (10, 'Italiano', 'Madrelingua'),
 (10, 'Svedese', 'Intermedio');
 
--- --------------------------------------------------------
+
 
 --
 -- Struttura della tabella `eventi`
@@ -88,7 +87,6 @@ CREATE TABLE `eventi` (
 
 
 
--- --------------------------------------------------------
 
 --
 -- Struttura della tabella `gruppi`
@@ -111,7 +109,7 @@ CREATE TABLE `gruppi` (
 INSERT INTO `gruppi` (`id_gruppo`, `id_evento`, `ora_inizio`, `id_guida`, `lingua`, `min_visitatori`, `max_visitatori`) VALUES
 
 
--- --------------------------------------------------------
+
 
 --
 -- Struttura della tabella `guide`
@@ -142,7 +140,7 @@ INSERT INTO `guide` (`id_guida`, `nominativo`, `sesso`, `data_nascita`, `titolo_
 (9, 'Davide Rossi', 'M', '1983-09-30', 'Laurea in Lettere', 2008),
 (10, 'Federica Verdi', 'F', '1992-12-05', 'Laurea in Storia del', 2016);
 
--- --------------------------------------------------------
+
 
 --
 -- Struttura della tabella `membri`
@@ -160,7 +158,7 @@ CREATE TABLE `membri` (
 -- Dump dei dati per la tabella `membri`
 --
 
--- --------------------------------------------------------
+
 
 --
 -- Struttura della tabella `visitatori`
@@ -180,7 +178,7 @@ CREATE TABLE `visitatori` (
 --
 
 
--- --------------------------------------------------------
+
 
 --
 -- Struttura della tabella `visite`

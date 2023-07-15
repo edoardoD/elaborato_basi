@@ -93,19 +93,19 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 	\begin{center}
 		\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
 			\hline
-			\rowcolor{red} termine & descrizione                                                                & sinonimi                   & collegamenti                                     \\
+			\rowcolor{red} termine & descrizione                                                                & sinonimi                   & collegamenti                    \\
 			\hline
-			utente                 & entità che interagisce con il database lato consumatore                    & cliente, visitatore        & gruppi, pagamenti, sconti                        \\
+			utente                 & entità che interagisce con il database lato consumatore                    & cliente, visitatore        & gruppi, pagamenti, sconti       \\
 			\hline
-			guida                  & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente    & turni di lavoro, competenze linguistiche, gruppi \\
+			guida                  & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente    & competenze linguistiche, gruppi \\
 			\hline
-			sconto                 & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                          & pagamento, cliente                               \\
+			sconto                 & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                          & pagamento, cliente              \\
 			\hline
-			gruppo                 & insieme di persone in questo caso                                          & -                          & cliente, guida, evento                           \\
+			gruppo                 & insieme di persone in questo caso                                          & -                          & cliente, guida, evento          \\
 			\hline
-			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                                   \\
+			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                  \\
 			\hline
-			visite                 & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale             & eventi                                           \\
+			visite                 & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale             & eventi                          \\
 			\hline
 		\end{tabularx}
 		\caption{\label{glossario:termini}} termini rappresentativi dell' intervista
@@ -166,9 +166,11 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 
 \section*{Individuazione operazioni principali}
 \begin{itemize}
-	\item Aggiunta di eventi per ogni tipo di visite
+	\item Aggiunta di visite
+	\item Aggiunta di eventi
 	\item inserimento di un nuovo cliente
 	\item inserimento di una nuova guida
+	\item supponendo che le guide si specializzino in altre lingue aggiunta di una nuova competenza di una guida
 	\item gestione e riepilogo ordini
 	\item Aggiunta di un nuovo gruppo
 	\item creazione di biglietti fino al numero minimo di partecipanti ad un gruppo
@@ -178,6 +180,9 @@ il livello di conoscenza deve essere espresso in (B2,C1,C2).
 	\item controllo del riempimento dei gruppi
 	\item assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze
 	\item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
+	\item aggiunta di una nuova lingua
+	\item inserimento di un nuovo metodo di pagamento
+	\item modifica valori Biglietto
 \end{itemize}
 
 \newpage
@@ -191,8 +196,8 @@ divisi per ambiti. Partirò da parti di schema concettuale più semplici fino ad
 	\caption[]{caratterizzazione della gestione fra le visite, i vari eventi che può ospitare e i gruppi che vi partecipano}
 \end{figure}
 Lo schema è piuttosto auto esplicativo, sono stati mantenuti i vincoli imposti
-dall'intervista come permettere l'Associazione di più eventi data una visita e 
-la partecipazione di più gruppi al determinato evento si noti come da un gruppo 
+dall'intervista come permettere l'Associazione di più eventi data una visita e
+la partecipazione di più gruppi al determinato evento si noti come da un gruppo
 si possa risalire ad un determinato evento e ad una determinata visita.
 \subsection*{Gerarchia persone, relazione fra gruppi guide e competenze}
 \begin{figure}[H]
@@ -202,9 +207,9 @@ si possa risalire ad un determinato evento e ad una determinata visita.
 \end{figure}
 
 Per gestire le entità CLIENTE, GUIDA poiché ave\-vano campi
-simili ho optato per una gerar\-chia di tipo totale ed Esclusiva 
+simili ho optato per una gerar\-chia di tipo totale ed Esclusiva
 ( DB\_MAIN non mostrava la scritta t, e)\-.
-Il resto dello schema E-R portato esplicita la modellazione di associare 
+Il resto dello schema E-R portato esplicita la modellazione di associare
 più tipi di lingue ad una determinata guida. Lingua quindi è un'entità debole
 che necessita della chiave di GUIDA per essere completa. Adottando questo metodo
 per ogni gurppo posso risalire alla guida e con che lingua e a che livello sarà
@@ -220,30 +225,67 @@ diretto.
 
 Per ogni gruppo è previsto che verranno pubblicati N biglietti in base al numero minimo di posti
 destinabili ad un gruppo.
-Viste le richieste del testo ho deciso di rendere personale il biglietto e dividere l'acquirente dal 
+Viste le richieste del testo ho deciso di rendere personale il biglietto e dividere l'acquirente dal
 proprietario.
 Lo sconto va verificato per ogni biglietto e il suo acquirente, le fasce di prezzo sono predefinite.
 Un ordine può riferirsi a più biglietti, in questo modo il cliente potrà acquistare più biglietti.
 Per il pagamento è stata generata una gerarchia parziale ed esclusiva poiché il pagamento con paypall
 sarebbe un link al sito e si potrebbe benissimo gestire direttamente lato software.
 
-
-
-
-
-
 \section{Schema scheletro}
-
 \includepdf[angle=90]{./resources/pdf/SCHELETRO2.pdf}
-dioo santo 
-
 
 \section{Raffinamenti proposti}
-\section{Schema concettuale finale}
+Come si nota dagli schemi riportati, esistono attributi di qualche tabella che sarebbe
+meglio modellare come entità indipendenti. In Particolare:
+\begin{itemize}
+	\item L'attributo `lingua' dell'entità cliente verrà modellato come entità nuova nello schema contenente tutte le lingue che il dominio del problema dovrà trattare
+	\item l'entità lingua diventerà `COMPETENZA', sarà un'entità debole poiché avrà come super-chiave il riferimento esterno alla lingua e alla guida.
+	\item l'attributo `tipo' presente nell' entità  `PAGAMENTO' sarà gestito a parte in modo da definirne i metodi di pagamento supportati. l'entità si chiamerà `METODO'
+	\item la relazione `CREDITO' ora conterrà un attributo prezzo
+\end{itemize}
+La trasformazione di questi attributi in entità comporta numerosi vantaggi:
+diminuisce gli errori in fase d'inserimento e limita il dominio possibile di questi
+attributi alle sole istanze presenti nelle relative entità
 
+\includepdf[angle=90,pagecommand=\section{Schema concettuale finale}\thispagestyle{empty}]{./resources/pdf/raffinamento2.pdf}
 \newpage
 \chapter{Progettazione logica}
 \section{Stima del volume dei dati}
+Nella tabella di seguito è riportato il volume atteso per ciascun costrutto presente
+nello schema concettuale.
+Per maggiore chiarezza, rispetto alla classica tabella che si usa per la stima dei
+volumi è stata aggiunta una colonna per descrivere brevemente alcuni costrutti dal
+nome ambiguo(specialmente associazioni), in modo da avere immediatamente idea
+dell’oggetto di cui si sta parlando senza dover trovare il riferimento nello schema
+concettuale.
+Inoltre, per garantire maggiore compattezza sono state omesse le stime dei volumi
+delle associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
+alle associazioni stesse con cardinalità 1.
+
+\begin{table}[H]
+	\begin{center}
+		\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
+			\hline
+			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto}                       & \uppercase{descrizione}    & \uppercase{volume} \\
+			\hline
+			\uppercase{cliente}                 & \uppercase{e}                               & -                          & 100000             \\
+			\hline
+			\uppercase{biglietto}               & \uppercase{e}                               & -                          & 80000              \\
+			\hline
+			\uppercase{gruppo}                  & \uppercase{e}                               & -                          & 16000              \\
+			\hline
+			\uppercase{evento}                  & \uppercase{e}                               & -                          & 3200               \\
+			\hline
+			evento                              & situazione specifica dato un luogo e orario & visita-guidata, escursioni & visita, gruppi     \\
+			\hline
+			\uppercase{visite}                  & \uppercase{e}                               & -                          & 640                \\
+			\hline
+		\end{tabularx}
+		\caption{bella per noi }
+	\end{center}
+\end{table}
+
 \section{Descrizione delle operazioni principali e stima della loro frequenza}
 \section{Schemi di navigazione e tabelle degli accessi}
 \section{Raffinamento dello schema}
@@ -254,13 +296,14 @@ dioo santo
 \section{Schema relazionale finale}
 \newpage
 \section{Traduzione delle operazioni in query SQL}
-\begin{lstlisting}[style=codeStyle,language=SQL]
-	CREATE TABLE `competenze` (
-  	`id_guida` int(11) NOT NULL,
-  	`lingua` varchar(15) NOT NULL,
-  	`livello` varchar(15) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-\end{lstlisting}
+\lstinputlisting[style=codeStyle, language=SQL]{../SQL/visite_turistiche.sql}
+% \begin{lstlisting}[style=codeStyle,language=SQL]
+% 	CREATE TABLE `competenze` (
+%   	`id_guida` int(11) NOT NULL,
+%   	`lingua` varchar(15) NOT NULL,
+%   	`livello` varchar(15) DEFAULT NULL
+% ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+% \end{lstlisting}
 \newpage
 \chapter{Progettazione dell'applicazione}
 \end{document}
