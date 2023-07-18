@@ -17,6 +17,8 @@
 \usepackage{pdfpages}
 \usepackage{listings}
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{xltabular}
 
 \lstdefinestyle{codeStyle}{
     basicstyle=\small\ttfamily,
@@ -95,21 +97,21 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 \begin{table}[H]
 	\begin{center}
 		\begin{tabularx}{\textwidth}{|C|C|C|C|}
-			\toprule
+			\hline
 			\rowcolor{red} termine & descrizione                                                                & sinonimi                   & collegamenti                    \\
-			\midrule
+			\hline
 			utente                 & entità che interagisce con il database lato consumatore                    & cliente, visitatore        & gruppi, pagamenti, sconti       \\
-			\midrule
+			\hline
 			guida                  & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente    & competenze linguistiche, gruppi \\
-			\midrule
+			\hline
 			sconto                 & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                          & pagamento, cliente              \\
-			\midrule
+			\hline
 			gruppo                 & insieme di persone in questo caso                                          & -                          & cliente, guida, evento          \\
-			\midrule
+			\hline
 			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                  \\
-			\midrule
+			\hline
 			visite                 & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale             & eventi                          \\
-			\bottomrule
+			\hline
 		\end{tabularx}
 		\caption{\label{glossario:termini}} termini rappresentativi dell' intervista
 	\end{center}
@@ -244,39 +246,74 @@ concettuale.
 Inoltre, per garantire maggiore compattezza sono state omesse le stime dei volumi
 delle associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
 alle associazioni stesse con cardinalità 1.
-\begin{table}[htbp]
-	\thispagestyle{empty}
-	\begin{center}
-		\begin{tabularx}{\textwidth}{|D|D|D|D|}
-			\toprule
-			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione}                                                               \\
-			\midrule
-			\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
-			\midrule
-			\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
-			\midrule
-			\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
-			\midrule
-			\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
-			\midrule
-			\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
-			\midrule
-			\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
-			\midrule
-			\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
-			\midrule
-			\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
-			\midrule
-			\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
-			\midrule
-			\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
-			\bottomrule
-		\end{tabularx}
-	\end{center}
-	\label{tab:volumeDati}
-	\thispagestyle{empty}
-\end{table}
+% \begin{table}[H]
+% 	\begin{center}
+% 		\begin{tabularx}{\textwidth}{|D|D|D|D|}
+% 			\hline
+% 			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione}                                                               \\
+% 			\hline
+% 			\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
+% 			\hline
+% 			\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
+% 			\hline
+% 			\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
+% 			\hline
+% 			\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
+% 			\hline
+% 			\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
+% 			\hline
+% 			\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
+% 			\hline
+% 			\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
+% 			\hline
+% 			\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
+% 			\hline
+% 			\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
+% 			\hline
+% 			\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
+% 			\hline
+% 		\end{tabularx}
+% 	\end{center}
+% 	\label{tab:volumeDati}
+% \end{table}
+%genera una longtable che si estende su più pagine
 
+
+\begin{xltabular}{\textwidth}{|D|D|D|D|}
+	\caption{Volume dei dati} \label{tab:volumeDati}\\
+	\hline
+	\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione} \\
+	\hline
+	\endfirsthead
+	\hline
+	\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione} \\
+	\hline
+	\endhead
+	\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
+	\hline
+	\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
+	\hline
+	\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
+	\hline
+	\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
+	\hline
+	\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
+	\hline
+	\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
+	\hline
+	\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
+	\hline
+	\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
+	\hline
+	\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
+	\hline
+	\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
+	\hline
+	\uppercase{guida}                  & \uppercase{e}         & 500                & ho molti dipendenti \\
+	\hline
+	\uppercase{competenza}             & \uppercase{e}         & 1500                & assumo che una guida conosca almeno 3 lingue \\
+	\hline
+\end{xltabular}
 
 
 \section{Descrizione delle operazioni principali e stima della loro frequenza}
