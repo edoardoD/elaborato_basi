@@ -1,5 +1,5 @@
 # visite
-prova zanichelli
+
 
 # comandi colonna latex 
 Tra le graffe puoi inserire diversi comandi per modificare l'aspetto o il comportamento della colonna. Alcuni esempi sono:
