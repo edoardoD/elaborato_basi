@@ -16,6 +16,7 @@
 \usepackage{colortbl}
 \usepackage{pdfpages}
 \usepackage{listings}
+\usepackage{booktabs}
 
 \lstdefinestyle{codeStyle}{
     basicstyle=\small\ttfamily,
@@ -29,6 +30,8 @@
     tabsize=4
 }
 \lstset{}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{D}{>{\center\arraybackslash}X}
 
 
 
@@ -91,22 +94,22 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 
 \begin{table}[H]
 	\begin{center}
-		\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
-			\hline
+		\begin{tabularx}{\textwidth}{|C|C|C|C|}
+			\toprule
 			\rowcolor{red} termine & descrizione                                                                & sinonimi                   & collegamenti                    \\
-			\hline
+			\midrule
 			utente                 & entità che interagisce con il database lato consumatore                    & cliente, visitatore        & gruppi, pagamenti, sconti       \\
-			\hline
+			\midrule
 			guida                  & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente    & competenze linguistiche, gruppi \\
-			\hline
+			\midrule
 			sconto                 & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                          & pagamento, cliente              \\
-			\hline
+			\midrule
 			gruppo                 & insieme di persone in questo caso                                          & -                          & cliente, guida, evento          \\
-			\hline
+			\midrule
 			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                  \\
-			\hline
+			\midrule
 			visite                 & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale             & eventi                          \\
-			\hline
+			\bottomrule
 		\end{tabularx}
 		\caption{\label{glossario:termini}} termini rappresentativi dell' intervista
 	\end{center}
@@ -163,27 +166,6 @@ Delle \textbf{\underline{guide}} turistiche oltre ai dati comuni con il cliente 
 anche il titolo di studio e il suo anno di conseguimento. La società intende registrare i dati relativi
 alle \textbf{\underline{competenze}}. Ogni competenza deve essere riferita ad una guida e alle lingue che essa conosce,
 il livello di conoscenza deve essere espresso in (B2,C1,C2).
-
-\section*{Individuazione operazioni principali}
-\begin{itemize}
-	\item Aggiunta di visite
-	\item Aggiunta di eventi
-	\item inserimento di un nuovo cliente
-	\item inserimento di una nuova guida
-	\item supponendo che le guide si specializzino in altre lingue aggiunta di una nuova competenza di una guida
-	\item gestione e riepilogo ordini
-	\item Aggiunta di un nuovo gruppo
-	\item creazione di biglietti fino al numero minimo di partecipanti ad un gruppo
-	\item vendita di biglietti per un determinato cliente
-	\item applicazione sconto in base al destinatario del biglietto acquistato
-	\item storico degli acquisti
-	\item controllo del riempimento dei gruppi
-	\item assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze
-	\item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
-	\item aggiunta di una nuova lingua
-	\item inserimento di un nuovo metodo di pagamento
-	\item modifica valori Biglietto
-\end{itemize}
 
 \newpage
 \chapter{Progettazione concettuale}
@@ -256,37 +238,68 @@ Nella tabella di seguito è riportato il volume atteso per ciascun costrutto pre
 nello schema concettuale.
 Per maggiore chiarezza, rispetto alla classica tabella che si usa per la stima dei
 volumi è stata aggiunta una colonna per descrivere brevemente alcuni costrutti dal
-nome ambiguo(specialmente associazioni), in modo da avere immediatamente idea
+nome ambiguo (specialmente associazioni), in modo da avere immediatamente idea
 dell’oggetto di cui si sta parlando senza dover trovare il riferimento nello schema
 concettuale.
 Inoltre, per garantire maggiore compattezza sono state omesse le stime dei volumi
 delle associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
 alle associazioni stesse con cardinalità 1.
-
-\begin{table}[H]
+\begin{table}[htbp]
+	\thispagestyle{empty}
 	\begin{center}
-		\begin{tabularx}{\textwidth}{|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|>{\centering\arraybackslash}X|}
-			\hline
-			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto}                       & \uppercase{descrizione}    & \uppercase{volume} \\
-			\hline
-			\uppercase{cliente}                 & \uppercase{e}                               & -                          & 100000             \\
-			\hline
-			\uppercase{biglietto}               & \uppercase{e}                               & -                          & 80000              \\
-			\hline
-			\uppercase{gruppo}                  & \uppercase{e}                               & -                          & 16000              \\
-			\hline
-			\uppercase{evento}                  & \uppercase{e}                               & -                          & 3200               \\
-			\hline
-			evento                              & situazione specifica dato un luogo e orario & visita-guidata, escursioni & visita, gruppi     \\
-			\hline
-			\uppercase{visite}                  & \uppercase{e}                               & -                          & 640                \\
-			\hline
+		\begin{tabularx}{\textwidth}{|D|D|D|D|}
+			\toprule
+			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione}                                                               \\
+			\midrule
+			\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
+			\midrule
+			\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
+			\midrule
+			\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
+			\midrule
+			\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
+			\midrule
+			\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
+			\midrule
+			\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
+			\midrule
+			\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
+			\midrule
+			\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
+			\midrule
+			\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
+			\midrule
+			\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
+			\bottomrule
 		\end{tabularx}
-		\caption{bella per noi }
 	\end{center}
+	\label{tab:volumeDati}
+	\thispagestyle{empty}
 \end{table}
 
+
+
 \section{Descrizione delle operazioni principali e stima della loro frequenza}
+\section*{Individuazione operazioni principali}\label{sec:operazioni}
+\begin{itemize}
+	\item Aggiunta di visite
+	\item Aggiunta di eventi
+	\item inserimento di un nuovo cliente
+	\item inserimento di una nuova guida
+	\item supponendo che le guide si specializzino in altre lingue aggiunta di una nuova competenza di una guida
+	\item gestione e riepilogo ordini
+	\item Aggiunta di un nuovo gruppo
+	\item creazione di biglietti fino al numero minimo di partecipanti ad un gruppo
+	\item vendita di biglietti per un determinato cliente
+	\item applicazione sconto in base al destinatario del biglietto acquistato
+	\item storico degli acquisti
+	\item controllo del riempimento dei gruppi
+	\item assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze
+	\item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
+	\item aggiunta di una nuova lingua
+	\item inserimento di un nuovo metodo di pagamento
+	\item modifica valori Biglietto
+\end{itemize}
 \section{Schemi di navigazione e tabelle degli accessi}
 \section{Raffinamento dello schema}
 \section{Analisi delle ridondanze}
