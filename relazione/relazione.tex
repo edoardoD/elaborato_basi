@@ -63,9 +63,9 @@ guida	che	illustra	il	percorso	in	una	determinata	lingua;	per	ogni	gruppo	viene	
 della	visita	e un	numero	minimo	e	massimo	di	partecipanti.
 Il prezzo degli eventi varia in base all'età:
 \begin{itemize}
-	\item 0-12 il prezzo è gratuito
-	\item 12-14 il prezzo è scontato del 20\%
-	\item gli over 50 godono di uno sconto pari al 10\%
+    \item 0-12 il prezzo è gratuito
+    \item 12-14 il prezzo è scontato del 20\%
+    \item gli over 50 godono di uno sconto pari al 10\%
 \end{itemize}
 La	società	si	avvale	di	diverse	guide	ognuna	delle	quali	ha	competenze	in	una	o	più	lingue	ad uno
 specifico	 livello	 di	 conoscenza	 ("B2","C1","C2"). Di ogni capo gruppo	 si	 vuole
@@ -85,9 +85,9 @@ visionare i gruppi a cui sono affidate le guide
 \section{Rilevamento delle ambiguità e correzioni proposte}
 Il testo dell'intervista presenta molte ambiguità. Le principali sono
 \begin{itemize}
-	\item utilizzo di sinonimi
-	\item Elenchi di attributi incompleti
-	\item Cartdinalità non specificate
+    \item utilizzo di sinonimi
+    \item Elenchi di attributi incompleti
+    \item Cartdinalità non specificate
 \end{itemize}
 
 Gli attributi parziali e le cardinalità verranno risolti mediante l'uso della logica in fase di creazione dello schema concettuale.
@@ -95,47 +95,47 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 
 
 \begin{table}[H]
-	\begin{center}
-		\begin{tabularx}{\textwidth}{|C|C|C|C|}
-			\hline
-			\rowcolor{red} termine & descrizione                                                                & sinonimi                   & collegamenti                    \\
-			\hline
-			utente                 & entità che interagisce con il database lato consumatore                    & cliente, visitatore        & gruppi, pagamenti, sconti       \\
-			\hline
-			guida                  & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente    & competenze linguistiche, gruppi \\
-			\hline
-			sconto                 & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                          & pagamento, cliente              \\
-			\hline
-			gruppo                 & insieme di persone in questo caso                                          & -                          & cliente, guida, evento          \\
-			\hline
-			evento                 & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni & visita, gruppi                  \\
-			\hline
-			visite                 & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale             & eventi                          \\
-			\hline
-		\end{tabularx}
-		\caption{\label{glossario:termini}} termini rappresentativi dell' intervista
-	\end{center}
+    \begin{center}
+        \begin{tabularx}{\textwidth}{|C|C|C|C|}
+            \hline
+            \rowcolor{red} \textcolor{white}{termine} & \textcolor{white}{descrizione}                                             & \textcolor{white}{sinonimi} & \textcolor{white}{collegamenti} \\
+            \hline
+            utente                                    & entità che interagisce con il database lato consumatore                    & cliente, visitatore         & gruppi, pagamenti, sconti       \\
+            \hline
+            guida                                     & figura qualificata in lingue e storia che illustra il percorso passo passo & capo gruppo, dipendente     & competenze linguistiche, gruppi \\
+            \hline
+            sconto                                    & rappresenta la percentuale da decurtare al prezzo finale in base all'età   & -                           & pagamento, cliente              \\
+            \hline
+            gruppo                                    & insieme di persone in questo caso                                          & -                           & cliente, guida, evento          \\
+            \hline
+            evento                                    & situazione specifica dato un luogo e orario                                & visita-guidata, escursioni  & visita, gruppi                  \\
+            \hline
+            visite                                    & logo d'interesse con cui ha accordi la società di turismo                  & sito culturale              & eventi                          \\
+            \hline
+        \end{tabularx}
+        \caption{\label{glossario:termini}} termini rappresentativi dell' intervista
+    \end{center}
 \end{table}
 
 
 \subsection*{Ipotesi aggiuntive}
 dall'intervista fatta si concretizza che:
 \begin{itemize}
-	\item il dato relativo alla durata media di una visita venga espresso in minuti
-	\item  per	uno	specifico	evento	di	visita	guidata	possano	essere	formati	anche	più	gruppi		ognuno
-	      col	proprio	orario,	accompagnatore	e	lingua;
-	\item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o	 più	 eventi	 debbono	 registrarsi	 sul	 sito	 della
-	      società	 fornendo	 e-mail	 e	 password.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione
-	      relativamente	 agli	 utenti	 anonimi:	 essi	 possono	 operare	 solo	 per	 funzionalità	 limitate	 d'
-	      interrogazione	per	vedere	i	dati	degli	eventi	programmati;
-	\item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente	ad	uno	specifico	evento,	nei	limiti
-	      della	 disponibilità	 di	 posti,	 ogni	 visitatore	 registrato	 effettui	 il	 pagamento	 tramite	 carta	 di
-	      credito	 (con	 codice	 della	 medesima),	 via	 PayPal	 (l’utente	 deve	 essere	 registrato	 a	 tale
-	      servizio),	 o	 tramite	 bonifico	 bancario	 di	 cui	 deve	 fornire	 gli	 estremi	 utilizzando	 il	 campo
-	      relativo	alla	descrizione	del	pagamento;
-	\item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
-	      suscettibile	di	variazioni	nel	tempo
-	\item per definire `gratuito' il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%
+    \item il dato relativo alla durata media di una visita venga espresso in minuti
+    \item  per	uno	specifico	evento	di	visita	guidata	possano	essere	formati	anche	più	gruppi		ognuno
+          col	proprio	orario,	accompagnatore	e	lingua;
+    \item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o	 più	 eventi	 debbono	 registrarsi	 sul	 sito	 della
+          società	 fornendo	 e-mail	 e	 password.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione
+          relativamente	 agli	 utenti	 anonimi:	 essi	 possono	 operare	 solo	 per	 funzionalità	 limitate	 d'
+          interrogazione	per	vedere	i	dati	degli	eventi	programmati;
+    \item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente	ad	uno	specifico	evento,	nei	limiti
+          della	 disponibilità	 di	 posti,	 ogni	 visitatore	 registrato	 effettui	 il	 pagamento	 tramite	 carta	 di
+          credito	 (con	 codice	 della	 medesima),	 via	 PayPal	 (l’utente	 deve	 essere	 registrato	 a	 tale
+          servizio),	 o	 tramite	 bonifico	 bancario	 di	 cui	 deve	 fornire	 gli	 estremi	 utilizzando	 il	 campo
+          relativo	alla	descrizione	del	pagamento;
+    \item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
+          suscettibile	di	variazioni	nel	tempo
+    \item per definire `gratuito' il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%
 \end{itemize}
 
 
@@ -169,15 +169,40 @@ anche il titolo di studio e il suo anno di conseguimento. La società intende re
 alle \textbf{\underline{competenze}}. Ogni competenza deve essere riferita ad una guida e alle lingue che essa conosce,
 il livello di conoscenza deve essere espresso in (B2,C1,C2).
 
+\section*{Individuazione operazioni principali}\label{sec:operazioni}
+\begin{enumerate}
+    \item Aggiunta di visite
+    \item Aggiunta di eventi
+    \item inserimento di un nuovo cliente
+    \item inserimento di una nuova guida
+    \item supponendo che le guide si specializzino in altre lingue aggiunta di una nuova competenza di una guida
+    \item gestione e riepilogo ordini
+    \item Aggiunta di un nuovo gruppo
+    \item creazione di biglietti fino al numero minimo di partecipanti ad un gruppo
+    \item vendita di biglietti per un determinato cliente
+    \item applicazione sconto in base al destinatario del biglietto acquistato
+    \item storico degli acquisti
+    \item controllo del riempimento dei gruppi
+    \item assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze
+    \item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
+    \item aggiunta di una nuova lingua
+    \item inserimento di un nuovo metodo di pagamento
+    \item modifica valori Biglietto
+    \item creazione vista dello storico ordini per ogni cliente
+    \item Ricerca filtrata di annunci di visite da
+          acquistare in base a diversi parametri scelti
+    \item ricerca delle visite disponibili in base ad una data
+\end{enumerate}
+vedi stima frequenza piú avanti\ref{sec:frequenza}
 \newpage
 \chapter{Progettazione concettuale}
 Per maggiore chiarezza, di seguito riportiamo i primi esempi di schemi concettuali
 divisi per ambiti. Partirò da parti di schema concettuale più semplici fino ad arrivare a parti più complesse
 \subsection*{Visita-Evento-Gruppo}
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.99\textwidth]{evento-visita-gruppo.png}
-	\caption[]{caratterizzazione della gestione fra le visite, i vari eventi che può ospitare e i gruppi che vi partecipano}
+    \centering
+    \includegraphics[width=0.99\textwidth]{evento-visita-gruppo.png}
+    \caption[]{caratterizzazione della gestione fra le visite, i vari eventi che può ospitare e i gruppi che vi partecipano}
 \end{figure}
 Lo schema è piuttosto auto esplicativo, sono stati mantenuti i vincoli imposti
 dall'intervista come permettere l'Associazione di più eventi data una visita e
@@ -185,9 +210,9 @@ la partecipazione di più gruppi al determinato evento si noti come da un gruppo
 si possa risalire ad un determinato evento e ad una determinata visita.
 \subsection*{Gerarchia persone, relazione fra gruppi guide e competenze}
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.99\textwidth]{gruppo-guide.png}
-	\caption[]{l'entità gruppo è descritta nella figura sopra}
+    \centering
+    \includegraphics[width=0.99\textwidth]{gruppo-guide.png}
+    \caption[]{l'entità gruppo è descritta nella figura sopra}
 \end{figure}
 
 Per gestire le entità CLIENTE, GUIDA poiché ave\-vano campi
@@ -202,9 +227,9 @@ diretto.
 \subsection*{Biglietto-Ordine-Cliente}
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.99\textwidth]{BIGLIETTO-ORDINE.png}
-	\caption{i biglietti rappresentano il punto di collegamento relazionale fra i gruppi e i clienti}
+    \centering
+    \includegraphics[width=0.99\textwidth]{BIGLIETTO-ORDINE.png}
+    \caption{i biglietti rappresentano il punto di collegamento relazionale fra i gruppi e i clienti}
 \end{figure}
 
 Per ogni gruppo è previsto che verranno pubblicati N biglietti in base al numero minimo di posti
@@ -223,10 +248,10 @@ sarebbe un link al sito e si potrebbe benissimo gestire direttamente lato softwa
 Come si nota dagli schemi riportati, esistono attributi di qualche tabella che sarebbe
 meglio modellare come entità indipendenti. In Particolare:
 \begin{itemize}
-	\item L'attributo `lingua' dell'entità cliente verrà modellato come entità nuova nello schema contenente tutte le lingue che il dominio del problema dovrà trattare
-	\item l'entità lingua diventerà `COMPETENZA', sarà un'entità debole poiché avrà come super-chiave il riferimento esterno alla lingua e alla guida.
-	\item l'attributo `tipo' presente nell' entità  `PAGAMENTO' sarà gestito a parte in modo da definirne i metodi di pagamento supportati. l'entità si chiamerà `METODO'
-	\item la relazione `CREDITO' ora conterrà un attributo prezzo
+    \item L'attributo `lingua' dell'entità cliente verrà modellato come entità nuova nello schema contenente tutte le lingue che il dominio del problema dovrà trattare
+    \item l'entità lingua diventerà `COMPETENZA', sarà un'entità debole poiché avrà come super-chiave il riferimento esterno alla lingua e alla guida.
+    \item l'attributo `tipo' presente nell' entità  `PAGAMENTO' sarà gestito a parte in modo da definirne i metodi di pagamento supportati. l'entità si chiamerà `METODO'
+    \item la relazione `CREDITO' ora conterrà un attributo prezzo
 \end{itemize}
 La trasformazione di questi attributi in entità comporta numerosi vantaggi:
 diminuisce gli errori in fase d'inserimento e limita il dominio possibile di questi
@@ -246,98 +271,81 @@ concettuale.
 Inoltre, per garantire maggiore compattezza sono state omesse le stime dei volumi
 delle associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
 alle associazioni stesse con cardinalità 1.
-% \begin{table}[H]
-% 	\begin{center}
-% 		\begin{tabularx}{\textwidth}{|D|D|D|D|}
-% 			\hline
-% 			\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione}                                                               \\
-% 			\hline
-% 			\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
-% 			\hline
-% 			\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
-% 			\hline
-% 			\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
-% 			\hline
-% 			\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
-% 			\hline
-% 			\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
-% 			\hline
-% 			\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
-% 			\hline
-% 			\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
-% 			\hline
-% 			\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
-% 			\hline
-% 			\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
-% 			\hline
-% 			\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
-% 			\hline
-% 		\end{tabularx}
-% 	\end{center}
-% 	\label{tab:volumeDati}
-% \end{table}
-%genera una longtable che si estende su più pagine
 
 
 \begin{xltabular}{\textwidth}{|D|D|D|D|}
-	\caption{Volume dei dati} \label{tab:volumeDati}\\
-	\hline
-	\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione} \\
-	\hline
-	\endfirsthead
-	\hline
-	\rowcolor{red} \uppercase{concetto} & \uppercase{costrutto} & \uppercase{volume} & \uppercase{descrizione} \\
-	\hline
-	\endhead
-	\uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
-	\hline
-	\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
-	\hline
-	\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
-	\hline
-	\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
-	\hline
-	\uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
-	\hline
-	\uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
-	\hline
-	\uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
-	\hline
-	\uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
-	\hline
-	\uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
-	\hline
-	\uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
-	\hline
-	\uppercase{guida}                  & \uppercase{e}         & 500                & ho molti dipendenti \\
-	\hline
-	\uppercase{competenza}             & \uppercase{e}         & 1500                & assumo che una guida conosca almeno 3 lingue \\
-	\hline
+    \caption{Volume dei dati} \label{tab:volumeDati}\\
+    \hline
+    \rowcolor{red} \textcolor{white}{\uppercase{concetto}} & \textcolor{white}{\uppercase{costrutto}} & \textcolor{white}{\uppercase{volume}} & \textcolor{white}{\uppercase{descrizione}} \\
+    \hline
+    \endhead
+    \uppercase{cliente}                 & \uppercase{e}         & 100000             & registrazioni di utenti curiosi                                                       \\
+    \hline
+    \uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
+    \hline
+    \uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
+    \hline
+    \uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
+    \hline
+    \uppercase{evento}                  & \uppercase{e}         & 3200               & ad ogni evento partecipano 5 gruppi                                                   \\
+    \hline
+    \uppercase{sconto}                  & \uppercase{e}         & 13334              & la frequenza degli sconti sono pari ad \(\frac16\)                                    \\
+    \hline
+    \uppercase{visite}                  & \uppercase{e}         & 640                & per ogni visita ci sono 5 eventi                                                      \\
+    \hline
+    \uppercase{pagamento}               & \uppercase{e}         & 13000              & ogni 2 ordini viene usato lo stesso metodo                                            \\
+    \hline
+    \uppercase{metodo}                  & \uppercase{e}         & 10                 & ad esagerare prevedo 10 metodi diversi per il pagamento                               \\
+    \hline
+    \uppercase{lingua}                  & \uppercase{e}         & 25                 & operando nella comunità europea considero tutte le lingue parlate all'interno di essa \\
+    \hline
+    \uppercase{guida}                  & \uppercase{e}         & 500                & ho molti dipendenti \\
+    \hline
+    \uppercase{competenza}             & \uppercase{e}         & 1500                & assumo che una guida conosca almeno 3 lingue \\
+    \hline
 \end{xltabular}
 
 
-\section{Descrizione delle operazioni principali e stima della loro frequenza}
-\section*{Individuazione operazioni principali}\label{sec:operazioni}
-\begin{itemize}
-	\item Aggiunta di visite
-	\item Aggiunta di eventi
-	\item inserimento di un nuovo cliente
-	\item inserimento di una nuova guida
-	\item supponendo che le guide si specializzino in altre lingue aggiunta di una nuova competenza di una guida
-	\item gestione e riepilogo ordini
-	\item Aggiunta di un nuovo gruppo
-	\item creazione di biglietti fino al numero minimo di partecipanti ad un gruppo
-	\item vendita di biglietti per un determinato cliente
-	\item applicazione sconto in base al destinatario del biglietto acquistato
-	\item storico degli acquisti
-	\item controllo del riempimento dei gruppi
-	\item assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze
-	\item indicazione dei posti rimanenti per le iscrizioni ad un gruppo
-	\item aggiunta di una nuova lingua
-	\item inserimento di un nuovo metodo di pagamento
-	\item modifica valori Biglietto
-\end{itemize}
+\section{Descrizione delle operazioni principali e stima della loro frequenza}\label{sec:frequenza}
+Di seguito sono riportate le operazioni principali giá individuate in fase di analisi \ref{sec:operazioni}
+che il sistema dovrà supportare, con una stima della loro frequenza di esecuzione.
+\begin{xltabular}{\textwidth}{|C|C|C|C|C|}
+    \caption{Frequenza delle Operazioni principali} \label{tab:frequenza}\\
+    \hline
+    \rowcolor{red} \textcolor{white}{\uppercase{codice operazione}} & \textcolor{white}{\uppercase{descrizione operazione}} & \textcolor{white}{\uppercase{frequenza}} \\
+    \hline
+    \endhead
+    \uppercase{op1} & \uppercase{registrazione di un nuovo utente} & 100000 \\
+    \hline
+\end{xltabular}
+
+\begin{tabularx}{\textwidth}{Xc}
+    \toprule
+    Operazione                                                                             & Frequenza  \\
+    \toprule
+    Aggiunta di visite                                                                     & 1/mese     \\
+    Aggiunta di eventi                                                                     & 5/giorno   \\
+    inserimento di un nuovo cliente                                                        & 10/giorno  \\
+    inserimento di una nuova guida                                                         & 5/anno     \\
+    aggiunta di una nuova competenza di una guida                                          & 2/mese     \\
+    gestione e riepilogo ordini                                                            & 50/giorno  \\
+    Aggiunta di un nuovo gruppo                                                            & 5/giorno   \\
+    creazione di biglietti fino al numero minimo di partecipanti ad un gruppo              & 5/giorno   \\
+    vendita di biglietti per un determinato cliente                                        & 3/giorno   \\
+    applicazione sconto in base al destinatario del biglietto acquistato                   & 2/giorno   \\
+    storico degli acquisti                                                                 & 3/mese     \\
+    controllo del riempimento dei gruppi                                                   & 10/giorno  \\
+    assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze         & 10/giorno  \\
+    indicazione dei posti rimanenti per le iscrizioni ad un gruppo                         & 40/giorno  \\
+    aggiunta di una nuova lingua                                                           & 2/anno     \\
+    inserimento di un nuovo metodo di pagamento                                            & 1/anno     \\
+    modifica valori Biglietto                                                              & 1/mese     \\
+    creazione vista dello storico ordini per ogni cliente                                  & 5/mese     \\
+    Ricerca filtrata di annunci di visite da acquistare in base a diversi parametri scelti & 400/giorno \\
+    \bottomrule
+\end{tabularx}
 \section{Schemi di navigazione e tabelle degli accessi}
+
 \section{Raffinamento dello schema}
 \section{Analisi delle ridondanze}
 \section{Traduzione di entità e associazioni in relazioni}
