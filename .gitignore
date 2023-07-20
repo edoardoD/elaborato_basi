@@ -1,5 +1,5 @@
 relazione/testo/*
-*.pdf
 !*.tex
 .vscode/*
 !*.json
+esempio.pdf
