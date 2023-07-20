@@ -12,6 +12,18 @@ Tra le graffe puoi inserire diversi comandi per modificare l'aspetto o il compor
 - **\color{colore}**: per cambiare il colore del testo della colonna, usando il pacchetto **color** o **xcolor**.
 - **\columncolor{colore}**: per cambiare il colore di sfondo della colonna, usando il pacchetto **colortbl**.
 
+```latex
+%unione delle celle in una colonna
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		utente                  & \uppercase{e}             & 1 & \uppercase{s} \\
+		\hline
+		\multicolumn{2}{|c|}{-} & \multicolumn{2}{|l|}{okk}                     \\
+	\end{tabularx}
+\end{table}
+```
+
 Puoi trovare altri esempi e spiegazioni nei seguenti link:
 
 - [Scriviamo un articolo in LaTeX - unipi.it](https://elearning.sp.unipi.it/pluginfile.php/21332/mod_resource/content/3/articolo.pdf)
