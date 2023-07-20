@@ -48,7 +48,7 @@
 
 
 
-\graphicspath{{./resources/img}}
+\graphicspath{{../resources/img}}
 \title{Elaborato Basi di Dati}
 \author{Desiderio Edoardo}
 \begin{document}
@@ -251,7 +251,7 @@ Per il pagamento è stata generata una gerarchia parziale ed esclusiva poiché i
 sarebbe un link al sito e si potrebbe benissimo gestire direttamente lato software.
 
 \section{Schema scheletro}
-\includepdf[angle=90]{./resources/pdf/SCHELETRO2.pdf}
+\includepdf[angle=90]{../resources/pdf/SCHELETRO2.pdf}
 
 \section{Raffinamenti proposti}
 Come si nota dagli schemi riportati, esistono attributi di qualche tabella che sarebbe
@@ -266,7 +266,7 @@ La trasformazione di questi attributi in entità comporta numerosi vantaggi:
 diminuisce gli errori in fase d'inserimento e limita il dominio possibile di questi
 attributi alle sole istanze presenti nelle relative entità
 
-\includepdf[angle=90,pagecommand=\section{Schema concettuale finale}\thispagestyle{empty}]{./resources/pdf/raffinamento2.pdf}
+\includepdf[angle=90,pagecommand=\section{Schema concettuale finale}\thispagestyle{empty}]{../resources/pdf/raffinamento2.pdf}
 \newpage
 \chapter{Progettazione logica}
 \section{Stima del volume dei dati}
@@ -389,7 +389,7 @@ Per l'aggiunta di un nuovo evento bisogna prima fare un controllo sulla visita
 \section{Schema relazionale finale}
 \newpage
 \section{Traduzione delle operazioni in query SQL}
-\lstinputlisting[style=codeStyle, language=SQL]{../SQL/visite_turistiche.sql}
+\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
 % \begin{lstlisting}[style=codeStyle,language=SQL]
 % 	CREATE TABLE `competenze` (
 %   	`id_guida` int(11) NOT NULL,
