@@ -1,6 +1,6 @@
 *.pdf
+!relazione/resources/
 relazione/*
-!relazione/resources/*
 !*.tex
 .vscode/*
 !*.json
