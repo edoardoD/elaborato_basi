@@ -35,6 +35,11 @@
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 \newcolumntype{D}{>{\center\arraybackslash}X}
 
+\newcommand{\speciallabel}[2]{
+	% \speciallabel{<stuff>}{<label>}
+  \edef\@currentlabel{#1}\label{#2}%
+}
+
 \newcommand{\tableheader}{% % il comando prende quattro argomenti
 \hline % disegna una linea orizzontale
 \rowcolor{red} % colora la riga di rosso
@@ -45,7 +50,16 @@
 \hline % disegna una linea orizzontale
 }
 
+% A new counter for the rows
+\newcounter{rowcntr}[table]
+\renewcommand{\therowcntr}{\table\number\numexpr\value{rowcntr}\relax}
 
+
+% A new columntype to apply automatic stepping
+\newcolumntype{N}{>{\refstepcounter{rowcntr}\therowcntr}l}
+
+% Reset the rowcntr counter at each new tabular
+\AtBeginEnvironment{tabular}{\setcounter{rowcntr}{0}}
 
 
 \graphicspath{{../resources/img}}
@@ -61,35 +75,42 @@
 Lo scopo è realizzare un portale che permetta alla società richiedente di gestire in maniera informatizzata le prenotazini e l'organizzazione
 delle visite guidate che vuole organizzare con i siti di maggior interesse.
 \section{Intervista}
-Una	 società	 operante	 nel	 settore	 del	 turismo	 offre	 tra	 i	 suoi	 servizi	 l’organizzazione	 di	 	 visite
-guidate	a	siti	d' interesse	storico-culturale.
-Ogni	visita,	opportunamente	descritta,	ha	un	 titolo	 (diverse	visite	hanno	un	 titolo	 ricorrente,	es.
-“Musei	Vaticani	e	Cappella	Sistina”,	“Sito	archeologico	di	Pompei”,	“Galleria	degli	uffizi”,	ecc.),	la
-sua	durata	media		e	il	luogo		in	cui	essa	si	svolge.	Ogni	visita	può	avere	luogo	più	volte	nel	tempo
-secondo	specifici	eventi	programmati.
-Le escursioni,	di	cui	viene	indicato	il	prezzo,	vengono	prenotati	da	gruppi	di	persone	condotti	da	una
-guida	che	illustra	il	percorso	in	una	determinata	lingua;	per	ogni	gruppo	viene	fissata	l’ora	d' inizio
-della	visita	e un	numero	minimo	e	massimo	di	partecipanti.
-Il prezzo degli eventi varia in base all'età:
+Una	 società	 operante	 nel	 settore	 del	 turismo	 offre	 tra
+i	 suoi	 servizi	 l’organizzazione	 di	 	 visite guidate	a	siti
+d' interesse	storico-culturale. Ogni	visita,	opportunamente	descritta,	ha
+un	 titolo	 (diverse	visite	hanno	un	 titolo	 ricorrente,	es. “Musei
+Vaticani	e	Cappella	Sistina”,	“Sito	archeologico	di	Pompei”,
+“Galleria	degli	uffizi”,	ecc.),	la sua	durata	media		e	il
+luogo		in	cui	essa	si	svolge.	Ogni	visita	può	avere	luogo	più
+volte	nel	tempo secondo	specifici	eventi	programmati. Le escursioni,	di
+cui	viene	indicato	il	prezzo,	vengono	prenotati	da	gruppi	di	persone
+condotti	da	una guida	che	illustra	il	percorso	in	una	determinata
+lingua;	per	ogni	gruppo	viene	fissata	l’ora	d' inizio della	visita	e un
+numero	minimo	e	massimo	di	partecipanti. Il prezzo degli eventi varia in
+base all'età:
 \begin{itemize}
 	\item 0-12 il prezzo è gratuito
 	\item 12-14 il prezzo è scontato del 20\%
 	\item gli over 50 godono di uno sconto pari al 10\%
 \end{itemize}
-La	società	si	avvale	di	diverse	guide	ognuna	delle	quali	ha	competenze	in	una	o	più	lingue	ad uno
-specifico	 livello	 di	 conoscenza	 ("B2","C1","C2"). Di ogni capo gruppo	 si	 vuole
-conoscere	 alcuni	 dati	 tra	 i	 quali	 nome,	 sesso,	 data	 di	 nascita,	 titolo	 di	 studio	 e	 relativo	 anno	 di
-conseguimento.
-\\
-I	clienti,	di	cui	si	vuole	conoscere	almeno	nome,	nazionalità,	lingua	base,	e-mail	e	un	 recapito
-telefonico,	 possono	 aggregarsi	 a	 uno	 o	 più	 gruppi,	 secondo	 le	 loro	 esigenze.	 Uno	 stesso
-visitatore,	 nel	 tempo,	 può	 partecipare	 a	 gruppi	 diversi	 usando	 ogni	 volta	 una	 certa	 forma	 di
-pagamento	(non	necessariamente	sempre	la	stessa	es.	Carta	di	credito,	paypal,	bonifico	bancario)
-della	quale	si	deve	prevedere	la	memorizzazione:	tipologia,	descrizione	e	data	del	pagamento.
-Il	 sito	 web	 della	 società	 consente	 la	 visione	 pubblica	 delle	 visite	 organizzate	 e,	 solo	 agli	 utenti
-preventivamente	registrati,	la	prenotazione	di	una	specifica	visita. In fine l'applicativo
-deve permettere una visione protetta dei dati, quindi non tutti gli utenti ad esempio possono
-visionare i gruppi a cui sono affidate le guide
+La	società	si	avvale	di	diverse	guide	ognuna	delle	quali	ha
+competenze	in	una	o	più	lingue	ad uno specifico	 livello	 di
+conoscenza	 ("B2","C1","C2"). Di ogni capo gruppo	 si	 vuole conoscere
+alcuni	 dati	 tra	 i	 quali	 nome,	 sesso,	 data	 di	 nascita,
+titolo	 di	 studio	 e	 relativo	 anno	 di conseguimento. \\
+I	clienti,	di	cui	si	vuole	conoscere	almeno	nome,	nazionalità,
+lingua	base,	e-mail	e	un	 recapito telefonico,	 possono	 aggregarsi
+a	 uno	 o	 più	 gruppi,	 secondo	 le	 loro	 esigenze.	 Uno
+stesso visitatore,	 nel	 tempo,	 può	 partecipare	 a	 gruppi	 diversi
+usando	 ogni	 volta	 una	 certa	 forma	 di pagamento	(non
+necessariamente	sempre	la	stessa	es.	Carta	di	credito,	paypal,	bonifico
+bancario) della	quale	si	deve	prevedere	la	memorizzazione:	tipologia,
+descrizione	e	data	del	pagamento. Il	 sito	 web	 della	 società
+consente	 la	 visione	 pubblica	 delle	 visite	 organizzate	 e,
+solo	 agli	 utenti preventivamente	registrati,	la	prenotazione	di	una
+specifica	visita. In fine l'applicativo deve permettere una visione protetta
+dei dati, quindi non tutti gli utenti ad esempio possono visionare i gruppi a
+cui sono affidate le guide
 
 \section{Rilevamento delle ambiguità e correzioni proposte}
 Il testo dell'intervista presenta molte ambiguità. Le principali sono
@@ -130,53 +151,76 @@ Invece per quanto concerne i sinonimi, è necessario costruire un glossario dei 
 \subsection*{Ipotesi aggiuntive}
 dall'intervista fatta si concretizza che:
 \begin{itemize}
-	\item il dato relativo alla durata media di una visita venga espresso in minuti
-	\item  per	uno	specifico	evento	di	visita	guidata	possano	essere	formati	anche	più	gruppi		ognuno
-	      col	proprio	orario,	accompagnatore	e	lingua;
-	\item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o	 più	 eventi	 debbono	 registrarsi	 sul	 sito	 della
-	      società	 fornendo	 e-mail	 e	 password.	 La	 banca	 dati	 non	 prevede	 alcuna	 gestione
-	      relativamente	 agli	 utenti	 anonimi:	 essi	 possono	 operare	 solo	 per	 funzionalità	 limitate	 d'
-	      interrogazione	per	vedere	i	dati	degli	eventi	programmati;
-	\item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente	ad	uno	specifico	evento,	nei	limiti
-	      della	 disponibilità	 di	 posti,	 ogni	 visitatore	 registrato	 effettui	 il	 pagamento	 tramite	 carta	 di
-	      credito	 (con	 codice	 della	 medesima),	 via	 PayPal	 (l’utente	 deve	 essere	 registrato	 a	 tale
-	      servizio),	 o	 tramite	 bonifico	 bancario	 di	 cui	 deve	 fornire	 gli	 estremi	 utilizzando	 il	 campo
-	      relativo	alla	descrizione	del	pagamento;
-	\item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga	espresso	a	livello	di	evento	in	quanto
-	      suscettibile	di	variazioni	nel	tempo
-	\item per definire `gratuito' il prezzo di un biglietto si imposterà una percentuale di sconto pari al 100\%
+	\item il dato relativo alla durata media di una visita venga espresso in
+	      minuti
+	\item  per	uno	specifico	evento	di	visita	guidata	possano	essere
+	      formati	anche	più	gruppi		ognuno col	proprio	orario,
+	      accompagnatore	e	lingua;
+	\item i	 vari	 visitatori	 per	 potersi	 iscriversi	 ad	 uno	 o
+	      più	 eventi	 debbono	 registrarsi	 sul	 sito	 della
+	      società	 fornendo	 e-mail	 e	 password.	 La	 banca	 dati	 non
+	      prevede	 alcuna	 gestione relativamente	 agli	 utenti	 anonimi:
+	      essi	 possono	 operare	 solo	 per	 funzionalità
+	      limitate	 d' interrogazione	per	vedere	i	dati	degli	eventi
+	      programmati;
+	\item per	potersi	iscrivere	ad	un	gruppo	di	visita	relativamente
+	      ad	uno	specifico	evento,	nei	limiti della	 disponibilità	 di
+	      posti,	 ogni	 visitatore	 registrato	 effettui	 il	 pagamento
+	      tramite	 carta	 di credito	 (con	 codice	 della	 medesima),	 via
+	      PayPal	 (l’utente	 deve	 essere	 registrato	 a	 tale servizio),
+	      o	 tramite	 bonifico	 bancario	 di	 cui	 deve	 fornire
+	      gli	 estremi	 utilizzando	 il	 campo relativo	alla
+	      descrizione	del	pagamento;
+	\item il	prezzo	di	una	visita	sia	comunque	individuale	e	venga
+	      espresso	a	livello	di	evento	in	quanto suscettibile	di
+	      variazioni	nel	tempo
+	\item per definire `gratuito' il prezzo di un biglietto si imposterà una
+	      percentuale di sconto pari al 100\%
 \end{itemize}
 
 
 \newpage
 \section{Definizione delle specifiche in linguaggio naturale ed estrazione dei concetti principali}
-Di seguito si riporta un testo riassuntivo in cui sono evidenziati i concetti chiave
-dell’ intervista filtrati dalle ambiguità possibili, in modo da avere un’ idea più chiara di
-quelle che saranno le entità presenti nello schema concettuale.\\\\
-La società commissionatrice vuole creare la gestione informatizzata dei suoi servizi.\\
-Ogni \textbf{\underline{visita}}, intesa come il sito culturale è opportunamente descritta definendo
-il titolo, luogo, identificativo, descrizione, durata media espressa in minuti.\\
-Per ogni visita la società organizza degli eventi. Ogni \textbf{\underline{evento}} può ripetersi più volte
-rispetto ad una determinata visita e ne viene definito il prezzo indicato che può variare nel tempo; si vuole memorizzare anche
-la data dell'evento.\\\\
-I \textbf{\underline{clienti}}, di cui si salvano lingua preferenza e dati principali una password e mail per accedere a funzionalità
-più avanzate per la prenotazione di biglietti ecc, vengono assegnati a gruppi differenti in base alle loro preferenze
-proposte  al momento dell'acquisto dei \textbf{biglietti}. Per gestire i pagamenti il cliente potrà aggiungere al carrello i biglietti che intende
-acquistare per poi procedere al pagamento utilizzando quello che più preferisce (paypall, bonifico, carta di credito) \\\\
-Dei \textbf{\underline{Gruppi}} si vuole indicare l'orario d' inizio della visita si vuole specificare
-il minimo numero di persone da cui deve essere composto un gruppo e il massimo, bisogna valutare
-se è conveniente salvare anche il numero d' iscritti correnti o lasciare il dato deducibile.\\\\
-I \textbf{\underline{biglietti}} devono essere acquistati dall'utente, siccome ogni utente può acquistare biglietti anche per altre persone
-ogni biglietto deve specificare il nome e il cognome e l'età della persona per cui
-viene acquistato il biglietto siccome sono previste fasce di \textbf{\underline{sconto}} in base all'età.
-Rispettivamente \(eta \le 12 \rightarrow\)  100\%, \(12 < eta \le 14 \rightarrow\)  20\%, \(eta >50 \rightarrow\)  10\%.
-Per ogni nuovo evento vengono emessi biglietti pari al numero minimo di partecipanti di un gruppo\\\\
-IL \textbf{\underline{carrello}} deve raccogliere le registrazioni per biglietti a persona per poi calcolare
-il totale dell'ordine. A livello applicativo sarà gestito da una vista che assocerà gli ordini fatti dal cliente \\\\
-Delle \textbf{\underline{guide}} turistiche oltre ai dati comuni con il cliente si vuole memorizzare
-anche il titolo di studio e il suo anno di conseguimento. La società intende registrare i dati relativi
-alle \textbf{\underline{competenze}}. Ogni competenza deve essere riferita ad una guida e alle lingue che essa conosce,
-il livello di conoscenza deve essere espresso in (B2,C1,C2).
+Di seguito si riporta un testo riassuntivo in cui sono evidenziati i concetti
+chiave dell’ intervista filtrati dalle ambiguità possibili, in modo da avere un’
+idea più chiara di quelle che saranno le entità presenti nello schema
+concettuale.\\\\
+La società commissionatrice vuole creare la gestione informatizzata dei suoi
+servizi.\\
+Ogni \textbf{\underline{visita}}, intesa come il sito culturale è opportunamente
+descritta definendo il titolo, luogo, identificativo, descrizione, durata media
+espressa in minuti.\\
+Per ogni visita la società organizza degli eventi. Ogni
+\textbf{\underline{evento}} può ripetersi più volte rispetto ad una determinata
+visita e ne viene definito il prezzo indicato che può variare nel tempo; si
+vuole memorizzare anche la data dell'evento.\\\\
+I \textbf{\underline{clienti}}, di cui si salvano lingua preferenza e dati
+principali una password e mail per accedere a funzionalità più avanzate per la
+prenotazione di biglietti ecc, vengono assegnati a gruppi differenti in base
+alle loro preferenze proposte  al momento dell'acquisto dei \textbf{biglietti}.
+Per gestire i pagamenti il cliente potrà aggiungere al carrello i biglietti che
+intende acquistare per poi procedere al pagamento utilizzando quello che più
+preferisce (paypall, bonifico, carta di credito) \\\\
+Dei \textbf{\underline{Gruppi}} si vuole indicare l'orario d' inizio della
+visita si vuole specificare il minimo numero di persone da cui deve essere
+composto un gruppo e il massimo, bisogna valutare se è conveniente salvare anche
+il numero d' iscritti correnti o lasciare il dato deducibile.\\\\
+I \textbf{\underline{biglietti}} devono essere acquistati dall'utente, siccome
+ogni utente può acquistare biglietti anche per altre persone ogni biglietto deve
+specificare il nome e il cognome e l'età della persona per cui viene acquistato
+il biglietto siccome sono previste fasce di \textbf{\underline{sconto}} in base
+all'età. Rispettivamente \(eta \le 12 \rightarrow\)  100\%, \(12 < eta \le 14
+\rightarrow\)  20\%, \(eta >50 \rightarrow\)  10\%. Per ogni nuovo evento
+vengono emessi biglietti pari al numero minimo di partecipanti di un gruppo\\\\
+IL \textbf{\underline{carrello}} deve raccogliere le registrazioni per biglietti
+a persona per poi calcolare il totale dell'ordine. A livello applicativo sarà
+gestito da una vista che assocerà gli ordini fatti dal cliente \\\\
+Delle \textbf{\underline{guide}} turistiche oltre ai dati comuni con il cliente
+si vuole memorizzare anche il titolo di studio e il suo anno di conseguimento.
+La società intende registrare i dati relativi alle
+\textbf{\underline{competenze}}. Ogni competenza deve essere riferita ad una
+guida e alle lingue che essa conosce, il livello di conoscenza deve essere
+espresso in (B2,C1,C2).
 
 \section*{Individuazione operazioni principali}\label{sec:operazioni}
 \begin{enumerate}
@@ -241,44 +285,52 @@ diretto.
 	\caption{i biglietti rappresentano il punto di collegamento relazionale fra i gruppi e i clienti}
 \end{figure}
 
-Per ogni gruppo è previsto che verranno pubblicati N biglietti in base al numero minimo di posti
-destinabili ad un gruppo.
-Viste le richieste del testo ho deciso di rendere personale il biglietto e dividere l'acquirente dal
-proprietario.
-Lo sconto va verificato per ogni biglietto e il suo acquirente, le fasce di prezzo sono predefinite.
-Un ordine può riferirsi a più biglietti, in questo modo il cliente potrà acquistare più biglietti.
-Per il pagamento è stata generata una gerarchia parziale ed esclusiva poiché il pagamento con paypall
-sarebbe un link al sito e si potrebbe benissimo gestire direttamente lato software.
+Per ogni gruppo è previsto che verranno pubblicati N biglietti in base al numero
+minimo di posti destinabili ad un gruppo. Viste le richieste del testo ho deciso
+di rendere personale il biglietto e dividere l'acquirente dal proprietario. Lo
+sconto va verificato per ogni biglietto e il suo acquirente, le fasce di prezzo
+sono predefinite. Un ordine può riferirsi a più biglietti, in questo modo il
+cliente potrà acquistare più biglietti. Per il pagamento è stata generata una
+gerarchia parziale ed esclusiva poiché il pagamento con paypall sarebbe un link
+al sito e si potrebbe benissimo gestire direttamente lato software.
 
 \section{Schema scheletro}
 \includepdf[angle=90]{../resources/pdf/SCHELETRO2.pdf}
 
 \section{Raffinamenti proposti}
-Come si nota dagli schemi riportati, esistono attributi di qualche tabella che sarebbe
-meglio modellare come entità indipendenti. In Particolare:
+Come si nota dagli schemi riportati, esistono attributi di qualche tabella che
+sarebbe meglio modellare come entità indipendenti. In Particolare:
 \begin{itemize}
-	\item L'attributo `lingua' dell'entità cliente verrà modellato come entità nuova nello schema contenente tutte le lingue che il dominio del problema dovrà trattare
-	\item l'entità lingua diventerà `COMPETENZA', sarà un'entità debole poiché avrà come super-chiave il riferimento esterno alla lingua e alla guida.
-	\item l'attributo `tipo' presente nell' entità  `PAGAMENTO' sarà gestito a parte in modo da definirne i metodi di pagamento supportati. l'entità si chiamerà `METODO'
+	\item L'attributo `lingua' dell'entità cliente verrà modellato come entità
+	      nuova nello schema contenente tutte le lingue che il dominio del problema
+	      dovrà trattare
+	\item l'entità lingua diventerà `COMPETENZA', sarà un'entità debole poiché
+	      avrà come super-chiave il riferimento esterno alla lingua e alla guida.
+	\item l'attributo `tipo' presente nell' entità  `PAGAMENTO' sarà gestito a
+	      parte in modo da definirne i metodi di pagamento supportati. l'entità si
+	      chiamerà `METODO' così facendo posso eliminare la gerarchia nata da pagamento
 	\item la relazione `CREDITO' ora conterrà un attributo prezzo
+	\item corretta la cardinalità fra sconto e biglietto (0-N) considerando che un tipo di sconto
+	      potrebbe essere legato a più biglietti
 \end{itemize}
 La trasformazione di questi attributi in entità comporta numerosi vantaggi:
-diminuisce gli errori in fase d'inserimento e limita il dominio possibile di questi
-attributi alle sole istanze presenti nelle relative entità
+diminuisce gli errori in fase d'inserimento e limita il dominio possibile di
+questi attributi alle sole istanze presenti nelle relative entità.
+
+
 
 \includepdf[angle=90,pagecommand=\section{Schema concettuale finale}\thispagestyle{empty}]{../resources/pdf/raffinamento2.pdf}
 \newpage
 \chapter{Progettazione logica}
 \section{Stima del volume dei dati}
-Nella tabella di seguito è riportato il volume atteso per ciascun costrutto presente
-nello schema concettuale.
-Per maggiore chiarezza, rispetto alla classica tabella che si usa per la stima dei
-volumi è stata aggiunta una colonna per descrivere brevemente alcuni costrutti dal
-nome ambiguo (specialmente associazioni), in modo da avere immediatamente idea
-dell’oggetto di cui si sta parlando senza dover trovare il riferimento nello schema
-concettuale.
-Inoltre, per garantire maggiore compattezza sono state omesse le stime dei volumi
-delle associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
+Nella tabella di seguito è riportato il volume atteso per ciascun costrutto
+presente nello schema concettuale. Per maggiore chiarezza, rispetto alla
+classica tabella che si usa per la stima dei volumi è stata aggiunta una colonna
+per descrivere brevemente alcuni costrutti dal nome ambiguo (specialmente
+associazioni), in modo da avere immediatamente idea dell’oggetto di cui si sta
+parlando senza dover trovare il riferimento nello schema concettuale. Inoltre,
+per garantire maggiore compattezza sono state omesse le stime dei volumi delle
+associazioni 1-N, in quanto equivalenti ai volumi delle entità che partecipano
 alle associazioni stesse con cardinalità 1.
 
 
@@ -292,7 +344,7 @@ alle associazioni stesse con cardinalità 1.
 	\hline
 	\uppercase{biglietto}               & \uppercase{e}         & 80000              & i biglietti sono 80\% degli utenti iscritti                                           \\
 	\hline
-	\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi 80000                                  \\
+	\uppercase{ordine}                  & \uppercase{e}         & 26000              & in media un ordine acquista 3 biglietti quindi \(\frac{80000}{3}\)                                  \\
 	\hline
 	\uppercase{gruppo}                  & \uppercase{e}         & 16000              & considero una media di 5 persone a gruppo                                             \\
 	\hline
@@ -316,8 +368,9 @@ alle associazioni stesse con cardinalità 1.
 
 
 \section{Descrizione delle operazioni principali e stima della loro frequenza}\label{sec:frequenza}
-Di seguito sono riportate le operazioni principali giá individuate in fase di analisi \ref{sec:operazioni}, alcuni aggiunti in questa fase,
-che il sistema dovrà supportare, con una stima della loro frequenza di esecuzione.
+Di seguito sono riportate le operazioni principali giá individuate in fase di
+analisi \ref{sec:operazioni}, alcuni aggiunti in questa fase, che il sistema
+dovrà supportare, con una stima della loro frequenza di esecuzione.
 % \begin{xltabular}{\textwidth}{|C|C|C|C|C|}
 % 	\caption{Frequenza delle Operazioni principali} \label{tab:frequenza}\\
 % 	\hline
@@ -328,12 +381,14 @@ che il sistema dovrà supportare, con una stima della loro frequenza di esecuzio
 % 	\hline
 % \end{xltabular}
 
+
 \begin{tabularx}{\textwidth}{Xc}
 	\toprule
 	Operazione                                                                             & Frequenza  \\
 	\toprule
+
 	Aggiunta di visite                                                                     & 1/mese     \\
-	Aggiunta di eventi                                                                     & 5/giorno   \\
+	Aggiunta di eventi                                                                     & 5/mese     \\
 	inserimento di un nuovo cliente                                                        & 10/giorno  \\
 	inserimento di una nuova guida                                                         & 5/anno     \\
 	aggiunta di una nuova competenza di una guida                                          & 2/mese     \\
@@ -353,16 +408,19 @@ che il sistema dovrà supportare, con una stima della loro frequenza di esecuzio
 	Ricerca filtrata di annunci di visite da acquistare in base a diversi parametri scelti & 400/giorno \\
 	visualizzazione di biglietti ancora invenduti per un determinato evento                & 500/giorno \\
 	eventi disponibili data una determinata lingua                                         & 100/giorno \\
-	totale vendite annuali                                                                 & 1/anno     \\
+	evento che ha venduto di più a fine anno commerciale                                   & 1/anno     \\
+	definire la guida che ha effettuato più visite a fine anno commerciale                 & 1/anno     \\
 	\bottomrule
 \end{tabularx}
+
 \section{Schemi di navigazione e tabelle degli accessi}
-\subsection*{Aggiunta nuovo record cliente e guida, visita}
-Per quanto riguarda l'aggiunta di guide e clienti, verrà omesso il corrispondente schema di navigazione
-in quanto coincide con l'entità stessa
+\subsection*{Aggiunta nuovo record cliente e guida, visita \ref{cell:op2}}
+Per quanto riguarda l'aggiunta di guide e clienti, verrà omesso il
+corrispondente schema di navigazione in quanto coincide con l'entità stessa
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|C|C|C|C|}
 		\tableheader
+		\hline
 		utente                 & \uppercase{e}                      & \(1\) & \uppercase{s} \\
 		\hline
 		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 1S\)}                         \\
@@ -370,18 +428,160 @@ in quanto coincide con l'entità stessa
 	\end{tabularx}
 \end{table}
 queste valutazioni valgono per ogni tipo di accesso in scrittura della singola entità.
-\subsection*{Aggiunta di visite per un determinato evento}
-Per l'aggiunta di un nuovo evento bisogna prima fare un controllo sulla visita
+\subsection*{Aggiunta nuovo gruppo }
+per aggiungere un nuovo gruppo devo eseguire operazioni come:
+\begin{itemize}
+	\item lettura dell'evento che si vuole caricare
+	\item lettura della guida che si vuole assegnare
+	\item lettura della lingua che si vuole assegnare
+	\item scrittura di pubblicazione del minimo dei biglietti
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{schemiAccesso/inserimentoGruppo.png}
+	\caption{la freccia \(EVENTO \rightarrow VISITA\) è da non considerarsi poiché evento avrà già un id di VISITA  e non sarà necessario leggerlo}
+	\label{fig:aggiunta_visita}
+\end{figure}
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|C|C|C|C|}
 		\tableheader
-		utente                 & \uppercase{e}                      & \(1\) & \uppercase{s} \\
 		\hline
-		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 1S\)}                         \\
+		EVENTO                 & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		COMPETENZA             & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		BIGLIETTO              & \uppercase{e}                         & \(5\) & \uppercase{s} \\
+		\hline
+		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 5S+2L\)}                         \\
 		\hline
 	\end{tabularx}
 \end{table}
+\subsection*{Inserimento delle competenze di una guida}
+Per questa operazione bisogna ricordarsi che l'entità COMPETENZE è di tipo
+debole e quindi oltre a fare una scrittura di un nuovo record bisogna anche fare
+una lettura per controllare le chiavi delle entità di riferimento.
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\linewidth]{schemiAccesso/COMPETENZE.png}
+	\caption{Schema di navigazione per la lettura dati chiave competenza}
+	\label{fig:aggiunta_competenza}
+\end{figure}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		COMPETENZE             & \uppercase{e}                         & \(1\) & \uppercase{s} \\
+		\hline
+		GUIDA                  & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		LINGUA                 & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 1S+2L\)}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+\subsection*{Acquisto biglietto per un determinato evento e valutazione sconto}
+Per l'acquisto di un biglietto bisogna controllare il gruppo a cuoi permette di
+accedere e visionare l'evento di riferimento, da li è possibile risalire al
+prezzo del biglietto. dopo di chè sarà possibile eventualmente valutare lo
+sconto in base a all'età dell'intestatario del biglietto
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{schemiAccesso/ACQUISTO_BIGLIETTO.png}
+	\caption{Schema di navigazione per l'acquisto di un biglietto}
+	\label{fig:acquisto_biglietto}
+\end{figure}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		BIGLIETTO              & \uppercase{e}                         & \(1\) & \uppercase{s} \\
+		\hline
+		GRUPPO                 & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		EVENTO                 & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		SCONTO                 & \uppercase{e}                         & \(1\) & \uppercase{l} \\
+		\hline
+		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 1S+3L\)}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+potrebbe sembrare molto macchinoso visto il volume dei dati espresso in
+precedenza navigare lo schema vino ad evento per definire il prezzo del
+biglietto, per tanto più avanti verrà indicato l'attributo prezzo in biglietto.
+\subsection*{Visualizzazione dei biglietti invenduti per un determinato evento}
+Per la visualizzazione dei biglietti invenduti bisogna prima controllare tutti i
+biglietti associati ai gruppi dell'evento citato, dopo di che bisogna
+controllare tutti i biglietti che non sono associati ad un ordine compiuto.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{schemiAccesso/BIGLIETTI_INVENDUTI.png}
+\end{figure}
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		BIGLIETTO              & \uppercase{e}                      & \(1\) & \uppercase{l} \\
+		\hline
+		GRUPPO                 & \uppercase{e}                      & \(1\) & \uppercase{l} \\
+		\hline
+		EVENTO                 & \uppercase{e}                      & \(1\) & \uppercase{l} \\
+		\hline
+		ORDINE                 & \uppercase{e}                      & \(1\) & \uppercase{l} \\
+		\hline
+		\multicolumn{2}{|c|}{} & \multicolumn{2}{|l|}{\(TOT = 4L\)}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\subsection*{Evento che ha venduto di più a fine anno commerciale}
+Per questa valutazione sarà necessario controllare tutti gli eventi annuali e
+valutare quanti biglietti sono stati venduti per ogni gruppo e il loro prezzo.
+Considerando che gli eventi hanno una frequenza di 5/mese in un anno ci sono 60
+eventi, quindi per ogni evento bisogna controllare tutti i gruppi associati e
+controllare quanti biglietti sono stati venduti per i relativi gruppi,
+considerando quanto riferito nella tabella dei volumi in cui ad ogni evento
+considero 5 gruppi quindi i gruppi annui saranno 60*5=300 a questi aggiungo un
+delta maggiorativo che renda sproporzionato il conteggio in modo da avere
+eventi che hanno ospitato più gruppi quindi 300+40 = 340 che sono i gruppi
+annui. Faccio lo stesso ragionamento per i biglietti. E 300*5= 1500  sarebbe la
+media dei biglietti annui per ogni gruppo ma devo crearli non proporzionali
+quindi aggiungo di 200 biglietti in modo da avere un totale di 1700 biglietti
+annui.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\linewidth]{schemiAccesso/venditaAnnuale.png}
+\end{figure}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		BIGLIETTO                         & \uppercase{e}                                   & \(1700\) & \uppercase{l} \\
+		\hline
+		GRUPPO                            & \uppercase{e}                                   & \(340\)  & \uppercase{l} \\
+		\hline
+		EVENTO                            & \uppercase{e}                                   & \(60\)   & \uppercase{l} \\
+		\hline
+		\multicolumn{2}{|r|}{\emph{TOT=}} & \multicolumn{2}{|l|}{\(1700L+340L+60L= 2100 \)}                            \\
+		\hline
+	\end{tabularx}
+	\caption{Volumi per la valutazione dell'evento che ha venduto di più a fine anno commerciale}
+\end{table}
+
+
+
 \section{Raffinamento dello schema}
+
+
+DAJE ROMA DAJEEE
+
 \section{Analisi delle ridondanze}
 \section{Traduzione di entità e associazioni in relazioni}
 
