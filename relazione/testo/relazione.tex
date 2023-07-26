@@ -381,40 +381,43 @@ dovrà supportare, con una stima della loro frequenza di esecuzione.
 % 	\hline
 % \end{xltabular}
 
+\begin{table}[H]
 
-\begin{tabularx}{\textwidth}{Xc}
-	\toprule
-	Operazione                                                                             & Frequenza  \\
-	\toprule
+	\begin{tabularx}{\textwidth}{Xc}
+		\toprule
+		Operazione                                                                             & Frequenza  \\
+		\toprule
 
-	Aggiunta di visite                                                                     & 1/mese     \\
-	Aggiunta di eventi                                                                     & 5/mese     \\
-	inserimento di un nuovo cliente                                                        & 10/giorno  \\
-	inserimento di una nuova guida                                                         & 5/anno     \\
-	aggiunta di una nuova competenza di una guida                                          & 2/mese     \\
-	gestione e riepilogo ordini                                                            & 50/giorno  \\
-	Aggiunta di un nuovo gruppo                                                            & 5/giorno   \\
-	creazione di biglietti fino al numero minimo di partecipanti ad un gruppo              & 5/giorno   \\
-	vendita di biglietti per un determinato cliente                                        & 3/giorno   \\
-	applicazione sconto in base al destinatario del biglietto acquistato                   & 2/giorno   \\
-	storico degli acquisti                                                                 & 3/mese     \\
-	controllo del riempimento dei gruppi                                                   & 10/giorno  \\
-	assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze         & 10/giorno  \\
-	indicazione dei posti rimanenti per le iscrizioni ad un gruppo                         & 40/giorno  \\
-	aggiunta di una nuova lingua                                                           & 2/anno     \\
-	inserimento di un nuovo metodo di pagamento                                            & 1/anno     \\
-	modifica valori Biglietto                                                              & 1/mese     \\
-	creazione vista dello storico ordini per ogni cliente                                  & 5/mese     \\
-	Ricerca filtrata di annunci di visite da acquistare in base a diversi parametri scelti & 400/giorno \\
-	visualizzazione di biglietti ancora invenduti per un determinato evento                & 500/giorno \\
-	eventi disponibili data una determinata lingua                                         & 100/giorno \\
-	evento che ha venduto di più a fine anno commerciale                                   & 1/anno     \\
-	definire la guida che ha effettuato più visite a fine anno commerciale                 & 1/anno     \\
-	\bottomrule
-\end{tabularx}
-
+		Aggiunta di visite                                                                     & 1/mese     \\
+		Aggiunta di eventi                                                                     & 5/mese     \\
+		inserimento di un nuovo cliente                                                        & 10/giorno  \\
+		inserimento di una nuova guida                                                         & 5/anno     \\
+		aggiunta di una nuova competenza di una guida                                          & 2/mese     \\
+		gestione e riepilogo ordini                                                            & 50/giorno  \\
+		Aggiunta di un nuovo gruppo                                                            & 5/giorno   \\
+		creazione di biglietti fino al numero minimo di partecipanti ad un gruppo              & 5/giorno   \\
+		vendita di biglietti per un determinato cliente                                        & 3/giorno   \\
+		applicazione sconto in base al destinatario del biglietto acquistato                   & 2/giorno   \\
+		storico degli acquisti                                                                 & 3/mese     \\
+		controllo del riempimento dei gruppi                                                   & 10/giorno  \\
+		assegnazione di una determinata guida ad un gruppo in base alle sue conoscenze         & 10/giorno  \\
+		indicazione dei posti rimanenti per le iscrizioni ad un gruppo                         & 40/giorno  \\
+		aggiunta di una nuova lingua                                                           & 2/anno     \\
+		inserimento di un nuovo metodo di pagamento                                            & 1/anno     \\
+		modifica valori Biglietto                                                              & 1/mese     \\
+		creazione vista dello storico ordini per ogni cliente                                  & 5/mese     \\
+		Ricerca filtrata di annunci di visite da acquistare in base a diversi parametri scelti & 400/giorno \\
+		visualizzazione di biglietti ancora invenduti per un determinato evento                & 500/giorno \\
+		eventi disponibili data una determinata lingua                                         & 100/giorno \\
+		evento che ha venduto di più a fine anno commerciale                                   & 1/anno     \\
+		definire la guida che ha effettuato più visite a fine anno commerciale                 & 1/anno     \\
+		\bottomrule
+	\end{tabularx}
+\end{table}
+Di seguito riporto gli schemi delle operazioni, alcune operazioni sono incluse ad altre
+in modo da rendere più snella la lettura della relazione e le operazioni descritte più corpose
 \section{Schemi di navigazione e tabelle degli accessi}
-\subsection*{Aggiunta nuovo record cliente e guida, visita \ref{cell:op2}}
+\subsection{Aggiunta nuovo record cliente e guida, visita \label{op:Aggiunta_semplice}}
 Per quanto riguarda l'aggiunta di guide e clienti, verrà omesso il
 corrispondente schema di navigazione in quanto coincide con l'entità stessa
 \begin{table}[H]
@@ -428,7 +431,7 @@ corrispondente schema di navigazione in quanto coincide con l'entità stessa
 	\end{tabularx}
 \end{table}
 queste valutazioni valgono per ogni tipo di accesso in scrittura della singola entità.
-\subsection*{Aggiunta nuovo gruppo }
+\subsection{Aggiunta nuovo gruppo \label{op:aggiuntaGruppo}}
 per aggiungere un nuovo gruppo devo eseguire operazioni come:
 \begin{itemize}
 	\item lettura dell'evento che si vuole caricare
@@ -457,7 +460,7 @@ per aggiungere un nuovo gruppo devo eseguire operazioni come:
 		\hline
 	\end{tabularx}
 \end{table}
-\subsection*{Inserimento delle competenze di una guida}
+\subsection{Inserimento delle competenze di una guida \label{op:competenze}}
 Per questa operazione bisogna ricordarsi che l'entità COMPETENZE è di tipo
 debole e quindi oltre a fare una scrittura di un nuovo record bisogna anche fare
 una lettura per controllare le chiavi delle entità di riferimento.
@@ -481,7 +484,7 @@ una lettura per controllare le chiavi delle entità di riferimento.
 		\hline
 	\end{tabularx}
 \end{table}
-\subsection*{Acquisto biglietto per un determinato evento e valutazione sconto}
+\subsection{Acquisto biglietto per un determinato evento e valutazione sconto \label{op:acquisto_biglietto}}
 Per l'acquisto di un biglietto bisogna controllare il gruppo a cuoi permette di
 accedere e visionare l'evento di riferimento, da li è possibile risalire al
 prezzo del biglietto. dopo di chè sarà possibile eventualmente valutare lo
@@ -513,7 +516,7 @@ sconto in base a all'età dell'intestatario del biglietto
 potrebbe sembrare molto macchinoso visto il volume dei dati espresso in
 precedenza navigare lo schema vino ad evento per definire il prezzo del
 biglietto, per tanto più avanti verrà indicato l'attributo prezzo in biglietto.
-\subsection*{Visualizzazione dei biglietti invenduti per un determinato evento}
+\subsection{Visualizzazione dei biglietti invenduti per un determinato evento \label{op:biglietti_invenduti}}
 Per la visualizzazione dei biglietti invenduti bisogna prima controllare tutti i
 biglietti associati ai gruppi dell'evento citato, dopo di che bisogna
 controllare tutti i biglietti che non sono associati ad un ordine compiuto.
@@ -539,7 +542,7 @@ controllare tutti i biglietti che non sono associati ad un ordine compiuto.
 	\end{tabularx}
 \end{table}
 
-\subsection*{Evento che ha venduto di più a fine anno commerciale}
+\subsection{Evento che ha venduto di più a fine anno commerciale \label{op:Vendite_annuali}}
 Per questa valutazione sarà necessario controllare tutti gli eventi annuali e
 valutare quanti biglietti sono stati venduti per ogni gruppo e il loro prezzo.
 Considerando che gli eventi hanno una frequenza di 5/mese in un anno ci sono 60
@@ -575,12 +578,43 @@ annui.
 	\caption{Volumi per la valutazione dell'evento che ha venduto di più a fine anno commerciale}
 \end{table}
 
-
+alla luce delle operazioni raccolte posso aggiornare le frequenze in base alle
+operazioni individuate
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\hline
+		\rowcolor{red} \textcolor{white}{OPERAZIONE} & \textcolor{white}{ACCESSI}   & \textcolor{white}{FREQUENZA}                      & \textcolor{white}{ TOTALE}                         \\
+		\hline
+		\ref{op:Aggiunta_semplice}                   & \(1S = 2\)                   & identica alla frequenza indicata per l'operazione & moltiplicare per gli accessi la frequenza indicata \\
+		\hline
+		\ref{op:aggiuntaGruppo}                      & \(5S+2L = 5*2+2 =12\)        & 5/giorno                                          & \(12*5 \rightarrow 60/giorno\)                     \\
+		\hline
+		\ref{op:competenze}                          & \(1s+2S = 4\)                & 2/mese                                            & \(4*2 \rightarrow 8/mese\)                         \\
+		\hline
+		\ref{op:acquisto_biglietto}                  & \(1L+3L \rightarrow 2+3= 5\) & 3/giorno                                          & \(5*3 \rightarrow 15/giorno\)                      \\
+		\hline
+		\ref{op:biglietti_invenduti}                 & \(4L\)                       & 4/giorno                                          & \(4*500 \rightarrow 2000/giorno\)                  \\
+		\hline
+		\ref{op:Vendite_annuali}                     & \(1700L+340L+60L= 2100\)     & 1/anno                                            & \(2100*1 \rightarrow 2100/anno\)                   \\
+		\hline
+	\end{tabularx}
+\end{table}
 
 \section{Raffinamento dello schema}
+In questa sezione ci occuperemo del raffinamento dello schema concettuale
+in vista della realizzazione dello schema logico. In particolare, bisogner`a
+concentrarsi su una serie di operazioni.
+\subsection*{Modifica degli attributi multipli e composti}
+Lo schema non pensata attributi multipli o composti
+\subsection*{Eliminazione delle gerarchie}
+Lo schema presenta come una gerarchia quella generata da PERSONA che ha come figli CLIENTE
+e GUIDA. Questa gerarchia può essere eliminata, eseguendo un collasso verso il basso,
+ottenendo lo schema in figura.
+Oltre aver risolto la gerarchia ho provveduto a eliminare il campo presente nella relazione
+CREDITO inserendolo nell'entità ordine.
 
-
-DAJE ROMA DAJEEE
+\includepdf[angle=90,pagecommand=\subsection*{Prime modifiche per lo schema logico}\thispagestyle{empty}]{../resources/pdf/Preparazione_logica.pdf}
 
 \section{Analisi delle ridondanze}
 \section{Traduzione di entità e associazioni in relazioni}
