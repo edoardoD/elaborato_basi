@@ -19,6 +19,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{xltabular}
+\usepackage{setspace}
 \usepackage{ulem}
 
 \lstdefinestyle{codeStyle}{
@@ -627,10 +628,10 @@ chiave primaria. In particolare.
 \end{itemize}
 
 \subsection*{Eliminazioni degli identificatori esterni}
-Al momento della realizzazione dello schema concettuale ho deciso omettere
-direttamente attributi di entità che avrebbero dovuto raccogliere informazioni
-riguardanti gli identificatori esterni lasciandoli intendere attraverso le
-cardinalità delle relazioni.\\
+Viene tolto l'attributo "lingua" nell'entità cliente poichè ci sarà
+il riferimento all'entità lingua attraverso la relazione.\\
+Per lo stesso motivo ho omesso tutti gli altri campi che avrebbero
+potuto essere identificatori esterni poichè impliciti nella relazione.
 
 Alla pagina seguente è possibile osservare il raffinamento dello schema con le modifiche citate.
 \includepdf[angle=90,pagecommand=\subsection*{Prime modifiche per lo schema logico}\thispagestyle{empty}]{../resources/pdf/Preparazione_logica.pdf}
@@ -710,6 +711,7 @@ I costi dell'operazione sono descritti nel paragrafo apposito
 \end{table}
 In ultimo, essendo SCONTO un'entità di sola lettura verrà tolta dalla relazione e sarà una entità
 assestante.
+Lo schema rimarrà invariato.
 
 \section{Traduzione di entità e associazioni in relazioni}
 \subsubsection*{Legen\-da let\-tura schema logico}
@@ -717,21 +719,44 @@ assestante.
 	\item I campi sottolineati rappresentano una chiava primaria \(\rightarrow\) \underline{PK}
 	\item I campi con una linea tratteggiata rappresentano una chiave esterna \(\rightarrow\) \dashuline{FK}
 	\item i campi che sono sia tratteggiati che sottolineati rappresentano una chiave esterna che funge da chiave primaria \(\rightarrow\) \underline{\dashuline{FK+PK}}
+	\item due campi con una sottolineatura unica rappresentano una chiave primaria composta \(\rightarrow\) \underline{PK1+PK2}
 \end{itemize}
-Dove compaiono chiavi esterne sono riportate le relazioni a cui fanno riferimento.\\\\
+Dove comp\-aiono chiavi esterne sono ripor\-tate le relazioni a cui fan\-no ri\-ferimento.
+I nomi passeranno dal singolare al plurale per enfatizzare le relazioni tabellari che dovrà rappresentare lo schema\\\\
 \fbox{
 	\begin{minipage}{\textwidth}
-		CLIENTE(\underline{email}, nome, cognome, password, nazionalita, telefono, \dashuline{lingua})\\
-		\textit{FK: lingua REFERENCES LINGUE}
-		LINGUA(\underline{nome})\\
-		GUIDA(\underline{email} ,nome, cognome, password, sesso, titolo, anno\_titolo)
-
+		\begin{spacing}{1.2}
+			\textcolor{blue}{LINGUE}(\underline{nome})\\
+			\textcolor{blue}{CLIENTI}(\underline{email}, nome, cognome, password, nazionalita, telefono, \dashuline{lingua*})\\
+			\textit{FK: lingua REFERENCES lingue}\\
+			\textit{UNIQUE(telefono)}\\
+			\textcolor{blue}{GUIDE}(\underline{email}, nome, cognome, password, sesso, titolo, anno\_titolo)\\
+			\textcolor{blue}{COMPETENZE}(\underline{\dashuline{guida*}, \dashuline{lingua*}}, livello)\\
+			\textit{FK: guida REFERENCES guide}\\
+			\textit{FK: lingua REFERENCES lingue}\\
+			\textcolor{blue}{METODI}(\underline{nome})\\
+			\textcolor{blue}{PAGAMENTI}(\underline{id}, n\_carta, iban, descrizione, \dashuline{metodo*}, \dashuline{cliente*})\\
+			\textit{FK: cliente REFER\-ENCES clienti}\\
+			\textit{FK: metodo REFER\-ENCES metodi}\\
+			\textit{UNIQUE(n\_carta, iban)}\\
+			\textcolor{blue}{ORDINE}(\underline{id}, prezzo, \dashuline{pagamento*})\\
+			\textit{FK: pagamento REFERENCES pagamenti}\\
+			\textcolor{blue}{BIGLIETTI}(\underline{id}, nome, cognome, eta, \dashuline{ordine*}, \dashuline{gruppo*})\\
+			\textit{FK: ordine REFERENCES ordini}\\
+			\textit{FK: gruppo REFERENCES gruppi}\\
+			\textcolor{blue}{GRUPPI}(\underline{id}, ora, data, max\_persone, min\_persone, \dashuline{lingua*, id\_guida*},\- \dashuline{evento*})\\
+			\textit{FK: lingua, id\_guida REFERENCES competenze}\\
+			\textit{FK: evento REFERENCES eventi}\\
+			\textcolor{blue}{VISITA}(\underline{nome}, descrizione, luogo, durata)\\
+			\textcolor{blue}{EVENTI}(\underline{id}, prezzo, data, \dashuline{visita*})\\
+			\textit{FK: visita REFERENCES visite}\\
+			\textcolor{blue}{SCONTO}(\underline{fascia}, eta\_soglia, percentuale)\\
+		\end{spacing}
 	\end{minipage}
 }
 
+\includepdf[angle=90,pagecommand=\section{Schema relazionale finale}\thispagestyle{empty}]{../resources/pdf/schemaLogico.pdf}
 
-
-\section{Schema relazionale finale}
 \newpage
 \section{Traduzione delle operazioni in query SQL}
 % \begin{lstlisting}[style=codeStyle,language=SQL]
