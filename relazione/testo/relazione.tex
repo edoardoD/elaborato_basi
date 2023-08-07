@@ -19,6 +19,7 @@
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{xltabular}
+\usepackage{ulem}
 
 \lstdefinestyle{codeStyle}{
     basicstyle=\small\ttfamily,
@@ -514,7 +515,7 @@ sconto in base a all'età dell'intestatario del biglietto
 	\end{tabularx}
 \end{table}
 potrebbe sembrare molto macchinoso visto il volume dei dati espresso in
-precedenza navigare lo schema vino ad evento per definire il prezzo del
+precedenza navigare lo schema fino ad evento per definire il prezzo del
 biglietto, per tanto più avanti verrà indicato l'attributo prezzo in biglietto.
 \subsection{Visualizzazione dei biglietti invenduti per un determinato evento \label{op:biglietti_invenduti}}
 Per la visualizzazione dei biglietti invenduti bisogna prima controllare tutti i
@@ -602,7 +603,7 @@ operazioni individuate
 \end{table}
 
 \section{Raffinamento dello schema}
-In questa sezione ci occuperemo del raffinamento dello schema concettuale
+In questa sezione mi occuperò del raffinamento dello schema concettuale
 in vista della realizzazione dello schema logico. In particolare, bisogner`a
 concentrarsi su una serie di operazioni.
 \subsection*{Modifica degli attributi multipli e composti}
@@ -610,20 +611,129 @@ Lo schema non pensata attributi multipli o composti
 \subsection*{Eliminazione delle gerarchie}
 Lo schema presenta come una gerarchia quella generata da PERSONA che ha come figli CLIENTE
 e GUIDA. Questa gerarchia può essere eliminata, eseguendo un collasso verso il basso,
-ottenendo lo schema in figura.
+ottenendo lo schema che segue a pagina successiva.
 Oltre aver risolto la gerarchia ho provveduto a eliminare il campo presente nella relazione
 CREDITO inserendolo nell'entità ordine.
+\subsection*{Scelta delle chiavi}
+Per le entità che posseggono più di un identificatore occorre designarne uno come
+chiave primaria. In particolare.
 
+\begin{itemize}
+	\item \underline{Utente} poteva essere identificato usando come varie
+	      combinazioni di attributi, ad esempio (nome, cognome, data di nascita) ho preferito
+	      usare ma email per poterla sfruttare sia come chiave primaria ma anche come identificativo
+	      per l'accesso al sistema informativo
+	\item in \underline{Guida} è stato fatto lo stesso ragionamento
+\end{itemize}
+
+\subsection*{Eliminazioni degli identificatori esterni}
+Al momento della realizzazione dello schema concettuale ho deciso omettere
+direttamente attributi di entità che avrebbero dovuto raccogliere informazioni
+riguardanti gli identificatori esterni lasciandoli intendere attraverso le
+cardinalità delle relazioni.\\
+
+Alla pagina seguente è possibile osservare il raffinamento dello schema con le modifiche citate.
 \includepdf[angle=90,pagecommand=\subsection*{Prime modifiche per lo schema logico}\thispagestyle{empty}]{../resources/pdf/Preparazione_logica.pdf}
 
 \section{Analisi delle ridondanze}
+Come già citato a momento\- della scelta dei volumi vorrei\- valutare se risulta
+efficiente la presenza di ridondanze all'interno dello schema.\\ In particolare
+nelle operazioni descritte risulta macchinoso dover attraversare più relazioni
+per ottenere le informazioni necessarie al prezzo del biglietto per assegnare
+un eventuale sconto o modificare di conseguenza l'importo totale dell'ordine.\\
+Per verificarne i benefici di questa ipotesi, studiamo i casi con e senza ridondanza.
+
+Individuo le operazioni che dipendono dalla scelta di realizzazione di tale attributo.
+\begin{table}[H]
+	\centering
+	\begin{tabularx}{\textwidth}{|D|D|}
+		\hline
+		\rowcolor{red}\textcolor{white}{OPERAZIONE} & \color{white}\textcolor{white}{DESCRIZIONE}        \\
+		\hline
+		\ref{op:aggiuntaGruppo}                     & aggiunta di un gruppo con creazione 5 biglietti    \\
+		\hline
+		\ref{op:acquisto_biglietto}                 & acquisto di biglietto con valutazione dello sconto \\
+		\hline
+	\end{tabularx}
+\end{table}
+\subsection*{Valutazione operazione \ref{op:aggiuntaGruppo}}
+È necessario riferirsi a quella che è la stima del volume dei dati per quanto
+riguarda la frequenza di questa operazione.\\
+la frequenza di questa operazione è di 60/giorno (dati presi come riferimento
+alla tabella conclusiva delle frequenze)
+
+
+\subsubsection*{Senza ridondanza}
+i costi dell'operazione sono descritti nel paragrafo apposito
+\subsubsection*{Con ridondanza}
+con ridondanza bisogna notare che per scrittura di biglietto è necessario accedere al prezzo dell'evento
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		EVENTO                          & \uppercase{e}                                               & \(5\) & \uppercase{l} \\
+		\hline
+		COMPETENZA                      & \uppercase{e}                                               & \(1\) & \uppercase{l} \\
+		\hline
+		BIGLIETTO                       & \uppercase{e}                                               & \(5\) & \uppercase{s} \\
+		\hline
+		\multicolumn{2}{|c|}{}          & \multicolumn{2}{|l|}{\(TOT = 5S+6L\)}                                               \\
+		\hline
+		\multicolumn{2}{|c|}{ACCESSO}   & \multicolumn{2}{|l|}{\(5\times2S+6L \rightarrow 16\)}                               \\
+		\hline
+		\multicolumn{2}{|c|}{FREQUENZA} & \multicolumn{2}{|l|}{\(16 \times 5 \rightarrow 80/giorno\)}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+
+\subsection*{Valutazione operazione \ref{op:acquisto_biglietto}}
+\subsubsection*{Senza ridondanza}
+I costi dell'operazione sono descritti nel paragrafo apposito
+\subsubsection*{Con ridondanza}
+
+\begin{table}[H]
+	\begin{tabularx}{\textwidth}{|C|C|C|C|}
+		\tableheader
+		\hline
+		BIGLIETTO                       & \uppercase{e}                                            & \(1\) & \uppercase{s} \\
+		\hline
+		SCONTO                          & \uppercase{e}                                            & \(1\) & \uppercase{l} \\
+		\hline
+		\multicolumn{2}{|c|}{}          & \multicolumn{2}{|l|}{\(TOT = 1S+3L\)}                                            \\
+		\hline
+		\multicolumn{2}{|c|}{ACCESSO}   & \multicolumn{2}{|l|}{\(1\times2+3L \rightarrow 5\)}                              \\
+		\hline
+		\multicolumn{2}{|c|}{FREQUENZA} & \multicolumn{2}{|l|}{\(5\times3 \rightarrow 15/giorno\)}                         \\
+		\hline
+	\end{tabularx}
+\end{table}
+In ultimo, essendo SCONTO un'entità di sola lettura verrà tolta dalla relazione e sarà una entità
+assestante.
+
 \section{Traduzione di entità e associazioni in relazioni}
+\subsubsection*{Legen\-da let\-tura schema logico}
+\begin{itemize}
+	\item I campi sottolineati rappresentano una chiava primaria \(\rightarrow\) \underline{PK}
+	\item I campi con una linea tratteggiata rappresentano una chiave esterna \(\rightarrow\) \dashuline{FK}
+	\item i campi che sono sia tratteggiati che sottolineati rappresentano una chiave esterna che funge da chiave primaria \(\rightarrow\) \underline{\dashuline{FK+PK}}
+\end{itemize}
+Dove compaiono chiavi esterne sono riportate le relazioni a cui fanno riferimento.\\\\
+\fbox{
+	\begin{minipage}{\textwidth}
+		CLIENTE(\underline{email}, nome, cognome, password, nazionalita, telefono, \dashuline{lingua})\\
+		\textit{FK: lingua REFERENCES LINGUE}
+		LINGUA(\underline{nome})\\
+		GUIDA(\underline{email} ,nome, cognome, password, sesso, titolo, anno\_titolo)
+
+	\end{minipage}
+}
+
 
 
 \section{Schema relazionale finale}
 \newpage
 \section{Traduzione delle operazioni in query SQL}
-\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
 % \begin{lstlisting}[style=codeStyle,language=SQL]
 % 	CREATE TABLE `competenze` (
 %   	`id_guida` int(11) NOT NULL,
@@ -631,6 +741,8 @@ CREDITO inserendolo nell'entità ordine.
 %   	`livello` varchar(15) DEFAULT NULL
 % ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 % \end{lstlisting}
+\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
+
 \newpage
 \chapter{Progettazione dell'applicazione}
 \end{document}
