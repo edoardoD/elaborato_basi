@@ -692,7 +692,6 @@ con ridondanza bisogna notare che per scrittura di biglietto è necessario acced
 \subsubsection*{Senza ridondanza}
 I costi dell'operazione sono descritti nel paragrafo apposito
 \subsubsection*{Con ridondanza}
-
 \begin{table}[H]
 	\begin{tabularx}{\textwidth}{|C|C|C|C|}
 		\tableheader
@@ -709,9 +708,9 @@ I costi dell'operazione sono descritti nel paragrafo apposito
 		\hline
 	\end{tabularx}
 \end{table}
-In ultimo, essendo SCONTO un'entità di sola lettura verrà tolta dalla relazione e sarà una entità
-assestante.
-Lo schema rimarrà invariato.
+
+In conclusione considerando che le operazioni senza ridondanza hanno un costo di 75/giorno
+e quelle con ridondanza 95/giorno, si può concludere che l'aggiunta di ridondanza non sia vantaggiosa
 
 \section{Traduzione di entità e associazioni in relazioni}
 \subsubsection*{Legen\-da let\-tura schema logico}
@@ -759,13 +758,7 @@ I nomi passeranno dal singolare al plurale per enfatizzare le relazioni tabellar
 
 \newpage
 \section{Traduzione delle operazioni in query SQL}
-% \begin{lstlisting}[style=codeStyle,language=SQL]
-% 	CREATE TABLE `competenze` (
-%   	`id_guida` int(11) NOT NULL,
-%   	`lingua` varchar(15) NOT NULL,
-%   	`livello` varchar(15) DEFAULT NULL
-% ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-% \end{lstlisting}
+
 \lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
 
 \newpage
