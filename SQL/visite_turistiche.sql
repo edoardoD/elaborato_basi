@@ -88,7 +88,7 @@ create table PAGAMENTI (
      IBAN char(27) UNIQUE,
      id int not null AUTO_INCREMENT,
      descrizione  char(100) ,
-     metodo char(10) not null,
+     metodo char(20) not null,
      constraint IDPAGAMENTO primary key (id))ENGINE=InnoDB;
 
 
@@ -116,8 +116,8 @@ alter table COMPETENZE add constraint FKSTUDIO
 
 alter table COMPETENZE add constraint FKPOSSESSO
      foreign key (guida) references GUIDE (email)
-          ON DELETE CASCADE
-          ON UPDATE CASCADE;
+          ON UPDATE CASCADE
+          ON DELETE CASCADE;
 
 alter table EVENTI add constraint FKORGANIZAZIONE
      foreign key (visita) references VISITE (nome)
