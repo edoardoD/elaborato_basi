@@ -70,8 +70,9 @@
 \begin{document}
 \maketitle
 \titlepage
-\tableofcontents
-\newpage
+\mbox{\thispagestyle{empty}}
+\tableofcontents{\thispagestyle{empty}}
+\setcounter{page}{0}
 
 \chapter{Analisi dei requisiti}
 Lo scopo è realizzare un portale che permetta alla società richiedente di gestire in maniera informatizzata le prenotazini e l'organizzazione
@@ -759,7 +760,7 @@ I nomi passeranno dal singolare al plurale per enfatizzare le relazioni tabellar
 \newpage
 \section{Traduzione delle operazioni in query SQL}
 
-\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
+%\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
 
 \newpage
 \chapter{Progettazione dell'applicazione}
