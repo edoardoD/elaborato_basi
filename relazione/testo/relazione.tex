@@ -21,6 +21,7 @@
 \usepackage{xltabular}
 \usepackage{setspace}
 \usepackage{ulem}
+\usepackage{float}
 
 \lstdefinestyle{codeStyle}{
     basicstyle=\small\ttfamily,
@@ -759,9 +760,65 @@ I nomi passeranno dal singolare al plurale per enfatizzare le relazioni tabellar
 
 \newpage
 \section{Traduzione delle operazioni in query SQL}
+Una volta creato il database (DDL in appendice\ref{A:CreateTable}) è stato necessario popolarlo
+con dei dati di esempio per poter testare le query.
+Ho proceduto nel riempire le tabelle che non avessero alcun tipo di riferimento
+esterno (quelle generate da entità indipendenti per così dire). Una volta inizializzate
+ho formulate query per inserire i dati nelle tabelle che avevano riferimenti esterni
+in modo da poter inserire i dati in modo corretto.\\
+%\subsection*{popolamento della tabella COMPETENZE}
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella COMPETENZE}]
+INSERT INTO COMPETENZE(guida,lingua,livello)
+SELECT 
+	g.email,
+	(SELECT l.nome 
+		FROM LINGUE l 
+		ORDER BY rand() 
+		LIMIT 1) as lingua, 
+	IF(floor(rand()*3)+1 = 1, "B2", 
+		IF(floor(rand()*3)+1 = 2, "C1", "C2")) 
+	AS livello
+FROM GUIDE g
+-- limit 3
+;
+\end{lstlisting}
+Per creare più varietà possibile nel caso della colonna
+delle lingue ho usato una subquery che seleziona una lingua a caso
+dalla tabella LINGUE. Per quanto riguarda il livello ho usato una funzione
+che genera un numero casuale tra 1 e 3 e in base al valore assegna un livello
+di competenza.\\
 
-%\lstinputlisting[style=codeStyle, language=SQL]{../../SQL/visite_turistiche.sql}
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento tabella EVENTI}]
+INSERT into EVENTI(prezzo,data,visita)
+SELECT 
+	ROUND(15 + RAND() * 15) AS prezzo, 
+	DATE_FORMAT(DATE_ADD(NOW(), INTERVAL ROUND(RAND()*30) DAY), '%Y-%m-%d') as dat,
+	(SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita
+FROM DUAL;
+\end{lstlisting}
+Questa query inserisce una nuova riga nella tabella EVENTI, usando dei valori
+generati casualmente.
 
-\newpage
+`SELECT ... from DUAL' è
+una clausola che seleziona dei valori da una tabella fittizia chiamata DUAL, che
+serve per eseguire delle operazioni senza usare una tabella vera.\\
+`ROUND(15 + RAND() * 15) AS prezzo' genera un numero casuale fra 15 e 30
+e lo arrotonda al valore intero più vicino. Questo valore viene assegnato alla colonna prezzo.\\
+`DATE\_FORMAT(DATE\_ADD(NOW(), INTERVAL ROUND(RAND()*30) DAY), '\%Y-\%m-\%d') as dat' genera
+una data casuale tra oggi e 30 giorni dopo, formattata come anno-mese-giorno.
+Questo valore viene assegnato alla colonna data.\\
+`(SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita' seleziona un
+nome casuale dalla tabella VISITE.
+
+
 \chapter{Progettazione dell'applicazione}
+
+\appendix
+\chapter{codice per la creazione delle tabelle \label{A:CreateTable}}
+\lstinputlisting[style=codeStyle, language=SQL,caption={si noti dalla linea 90 l'aterazione delle tabelle una volta create per gestire le relazioni definite nel report}]{../../SQL/visite_turistiche.sql}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.67\textwidth,angle=90]{../resources/img/phpMyadmin.png}
+	\caption{schema logico generato dall'interfaccia di phpMyAdmin dato il seguente codice SQL}
+\end{figure}
 \end{document}

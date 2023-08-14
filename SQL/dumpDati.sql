@@ -56,15 +56,7 @@ VALUES ('Mario', 'Rossi', 'mario.rossi@gmail.com', 'password', 'M', 'laurea', 20
        ('Sara', 'Moretti', 'sara.moretti@libero.it', 'password', 'F', 'master', 2015),
        ('Sara', 'Moretti', 'sara.moretti@libero.it', 'password', 'F', 'dottorato', 2015);
 
-create table CLIENTI (
-     email char(40) not null,
-     nome char(20) not null,
-     cognome char(20) not null,
-     password char(20) not null,
-     nazionalita char(20) not null,
-     telefono int not null UNIQUE,
-     lingua char(20) not null,
-     constraint IDCLIENTE primary key (email))ENGINE=InnoDB;
+
 
 
 INSERT INTO CLIENTI (email, nome, cognome, password, nazionalita, telefono, lingua) VALUES
@@ -88,3 +80,18 @@ INSERT INTO CLIENTI (email, nome, cognome, password, nazionalita, telefono, ling
 ('lars.olsen@outlook.no','Lars','Olsen','gul1234','norvegese',4712345679,'norvegese'),
 ('anna.kowalska@gmail.com.pl','Anna','Kowalska','zolty1234','polacca',4812345679,'polacco'),
 ('zoltan.nagy@hotmail.hu','Zoltan','Nagy','sarga1234','ungherese',3612345679,'ungherese');
+
+
+INSERT INTO COMPETENZE(guida,lingua,livello)
+SELECT g.email, 
+(SELECT l.nome FROM LINGUE l ORDER BY rand() LIMIT 1) as lingua, 
+IF(floor(rand()*3)+1 = 1, "B2", IF(floor(rand()*3)+1 = 2, "C1", "C2")) AS livello
+FROM GUIDE g
+limit 3;
+
+INSERT into EVENTI(prezzo,data,visita)
+     SELECT 
+         ROUND(15 + RAND() * 15) AS prezzo, 
+         DATE_FORMAT(DATE_ADD(NOW(), INTERVAL ROUND(RAND()*30) DAY), '%Y-%m-%d') as dat,
+         (SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita
+     from DUAL;
