@@ -13,7 +13,6 @@ create table METODI (
      nome char(20) not null CHECK (nome in ('Carta di credito', 'PayPal', 'Bonifico')),
      constraint IDMETODO primary key (nome))ENGINE=InnoDB;
 
-
 create table VISITE (
      nome char(50) not null,
      descrizione char(100) not null,
@@ -74,8 +73,6 @@ create table BIGLIETTI (
      ordine int,
      constraint IDBIGLIETTO primary key (id))ENGINE=InnoDB;
 
-
-
 create table ORDINI (
      prezzo int,
      id int  AUTO_INCREMENT,
@@ -90,10 +87,7 @@ create table PAGAMENTI (
      descrizione  char(100) ,
      metodo char(20) not null,
      constraint IDPAGAMENTO primary key (id))ENGINE=InnoDB;
-
-
-
-
+--alterzaione delle tabelle per i vincoli di integrita'
 alter table BIGLIETTI add constraint FKINGRESSO
      foreign key (gruppo) references GRUPPI (id)
           ON DELETE CASCADE
@@ -148,7 +142,3 @@ alter table PAGAMENTI add constraint FKUTILIZZO
      foreign key (metodo) references METODI (nome)
           ON DELETE CASCADE
           ON UPDATE CASCADE;
-
-
-
-
