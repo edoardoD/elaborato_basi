@@ -767,7 +767,7 @@ esterno (quelle generate da entità indipendenti per così dire). Una volta iniz
 ho formulate query per inserire i dati nelle tabelle che avevano riferimenti esterni
 in modo da poter inserire i dati in modo corretto.\\
 %\subsection*{popolamento della tabella COMPETENZE}
-\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella COMPETENZE}]
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella \textbf{COMPETENZE}}]
 INSERT INTO COMPETENZE(guida,lingua,livello)
 SELECT 
 	g.email,
@@ -788,7 +788,7 @@ dalla tabella LINGUE. Per quanto riguarda il livello ho usato una funzione
 che genera un numero casuale tra 1 e 3 e in base al valore assegna un livello
 di competenza.\\
 
-\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento tabella EVENTI}]
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento tabella \textbf{EVENTI}}]
 INSERT into EVENTI(prezzo,data,visita)
 SELECT 
 	ROUND(15 + RAND() * 15) AS prezzo, 
@@ -810,6 +810,37 @@ Questo valore viene assegnato alla colonna data.\\
 `(SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita' seleziona un
 nome casuale dalla tabella VISITE.
 
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella \textbf{GRUPPI}}]
+	
+INSERT INTO GRUPPI(ora,data,max_persone,min_persone,lingua,id_guida,id_evento)
+SELECT 
+    -- genera un orario a caso fra le 8 alle 14 e dalle 16 alle 18 con intervalli di ogni quarto d'ora
+    CASE WHEN 
+          RAND() < 0.5 THEN SEC_TO_TIME(FLOOR(RAND() * (14 - 8) * 3600 / 900) * 900 + 8 * 3600) 
+          ELSE SEC_TO_TIME(FLOOR(RAND() * (18 - 16) * 3600 / 900) * 900 + 16 * 3600)
+          END AS ora,
+    10 AS max_persone,
+    5 AS min_persone,
+    C.lingua AS lingua,
+    C.guida AS id_guida,
+     
+    E.Id AS id_evento
+FROM 
+    -- usa una join tra le tabelle EVENTI e COMPETENZE per avere tutte le possibili combinazioni
+    EVENTI E JOIN COMPETENZE C ON TRUE
+WHERE 
+/*numero a caso fra 0 e il numero totale di righe della join*/
+    RAND() * (SELECT COUNT(*) FROM EVENTI E JOIN COMPETENZE C ON TRUE) <20;
+\end{lstlisting}
+Uso una costante arbitraria per controllare la probabilità d'inserimento:
+più è alta, più è probabile che venga inserita una riga
+se è uguale al numero totale di righe della John, viene inserita sempre una riga
+se è uguale a zero, non viene inserita mai una riga.\\
+Per gestire l'orario in modo che cada ogni quarto d'ora divido l’intervallo di
+tempo in segmenti di 900 secondi, che corrispondono a 15 minuti.
+Poi, uso la funzione FLOOR per arrotondare il numero casuale generato da RAND
+al multiplo inferiore di 900. Infine, uso la funzione SEC\_TO\_TIME per convertire
+il numero di secondi in un formato orario.
 
 \chapter{Progettazione dell'applicazione}
 
