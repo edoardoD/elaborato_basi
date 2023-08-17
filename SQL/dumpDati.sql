@@ -96,7 +96,7 @@ INSERT into EVENTI(prezzo,data,visita)
          (SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita
      from DUAL;
 
-INSERT INTO GRUPPI(ora,data,max_persone,min_persone,lingua,id_guida,id_evento)
+INSERT INTO GRUPPI(ora,max_persone,min_persone,lingua,id_guida,id_evento)
 SELECT 
     -- genera un orario a caso fra le 8 alle 14 e dalle 16 alle 18
     -- con intervalli di ogni quarto d'ora
