@@ -95,3 +95,32 @@ INSERT into EVENTI(prezzo,data,visita)
          DATE_FORMAT(DATE_ADD(NOW(), INTERVAL ROUND(RAND()*30) DAY), '%Y-%m-%d') as dat,
          (SELECT nome FROM VISITE ORDER by rand() LIMIT 1) as visita
      from DUAL;
+
+INSERT INTO GRUPPI(ora,data,max_persone,min_persone,lingua,id_guida,id_evento)
+SELECT 
+    -- genera un orario a caso fra le 8 alle 14 e dalle 16 alle 18
+    -- con intervalli di ogni quarto d'ora
+    CASE WHEN 
+          RAND() < 0.5 THEN SEC_TO_TIME(FLOOR(RAND() * (14 - 8) * 3600 / 900) * 900 + 8 * 3600) 
+          ELSE SEC_TO_TIME(FLOOR(RAND() * (18 - 16) * 3600 / 900) * 900 + 16 * 3600)
+          END AS ora,
+    -- usa i valori fissi per max_persone e min_persone
+    10 AS max_persone,
+    5 AS min_persone,
+    -- estrae a caso una lingua e una guida dalla tabella COMPETENZE
+    C.lingua AS lingua,
+    C.guida AS id_guida,
+    -- estrae a caso un id_evento dalla tabella EVENTI
+    E.Id AS id_evento
+FROM 
+    -- usa una join tra le tabelle EVENTI e COMPETENZE per avere tutte le possibili combinazioni
+    EVENTI E JOIN COMPETENZE C ON TRUE
+-- usa una clausola WHERE per limitare il numero di righe inserite a una sola
+WHERE 
+    -- genera un numero a caso fra 0 e il numero totale di righe della join
+    RAND() * (SELECT COUNT(*) FROM EVENTI E JOIN COMPETENZE C ON TRUE) <
+    -- usa una costante arbitraria per controllare la probabilità di inserimento
+    -- più è alta, più è probabile che venga inserita una riga
+    -- se è uguale al numero totale di righe della join, viene inserita sempre una riga
+    -- se è uguale a zero, non viene inserita mai una riga
+    20;
