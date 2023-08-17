@@ -56,7 +56,6 @@ create table EVENTI (
 create table GRUPPI (
      ora time not null,
      id int not null AUTO_INCREMENT,
-     data date not null,
      max_persone int not null,
      min_persone int not null,
      lingua char(20) not null,
