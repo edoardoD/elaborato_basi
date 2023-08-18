@@ -1,0 +1,55 @@
+<div>
+    <title>about</title>
+    <h1>tutta la passione per lo sport</h1>
+    <br><br> <p>cerca fra quelli disponibili il corso più adatto a te !</p>
+    <div class="cuses">
+        <table class="table" border="1">
+            <thead>
+                <tr>
+                    <td>Giorno</td>
+                    <td>ora</td>
+                    <td>corso</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        $(function(){
+            alert("pagina caricata");
+            $.ajax({
+                type:"GET",
+                url: "php/GET.php",
+                data: "request=curses",
+                //data: contiene tutti i parametri che vanno messi nell' url => 
+                // url: 'php/curses.php' 
+                // data: 'nome=edoardo'
+                // equivale a url: 'php/curses.php?nome=edoardo' il metodo prima citato è inteligente nel caso bisogni usare variabili
+                dataType: "html",
+                succes: function(data){
+                    console.log(data);
+                    let html='';
+                    result.corsi.forEach(function(corso){
+                        html +=`
+                            <tr>
+                                <td>${corso.Giorno}</td>
+                                <td>${corso.Ora}</td>
+                                <td>${corso.Corso}</td>
+                            </tr>`;
+                    })
+                    console.log(html);
+
+                    $(".curses table tbody").html(html);
+                },
+                error: function(data,status,error){
+                    alert("errore del server!");
+                    console.error(error);
+                }
+            })
+            alert("pagina caricata ");
+        });
+    </script>
+</div>
