@@ -2,6 +2,5 @@
     $host= "localhost";
     $user="root";
     $password="";
-    $dbName="palestra";
-
+    $dbName="my_dodoesercizzi";
 ?>
