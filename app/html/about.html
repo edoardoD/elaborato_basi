@@ -1,54 +1,74 @@
 <div>
     <title>about</title>
     <h1>amare la cultura è il miglior modo per nutrire l'anima</h1>
-    <br><br> <p>valuta la tua prossima avventura</p>
-    <div class="cuses">
-        <table class="table" border="1">
-            <thead>
-                <tr>
-                    <td>Nome evento</td>
-                    <td>ora</td>
-                    <td>corso</td>
-                </tr>
-            </thead>
-            <tbody>
+    <p>da sempre promuovere eventi colturali é la nostra mission cercando di garantire la massima qualitá
+        e la massima soddisfazione per i nostri clienti</p>
+    <p>per questo motivo abbiamo deciso di creare un sito che permetta di organizzare e prenotare visite guidate</p>
+    <p>seleziona una guida e scopri le loro peculiaritá</p> <select name="guide" id="guide"></select><br>
 
-            </tbody>
-        </table>
-    </div>
-
-    <script>
-        $(function(){
-            alert("pagina caricata");
-            $.ajax({
-                type:"GET",
-                url: "php/GET.php",
-                data: "request=curses",
-                //data: contiene tutti i parametri che vanno messi nell' url => 
-                // url: 'php/curses.php' 
-                // data: 'nome=edoardo'
-                // equivale a url: 'php/curses.php?nome=edoardo' il metodo prima citato è inteligente nel caso bisogni usare variabili
-                dataType: "html",
-                succes: function(data){
-                    console.log(data);
-                    let html='';
-                    result.corsi.forEach(function(corso){
-                        html +=`
-                            <tr>
-                                <td>${corso.Giorno}</td>
-                                <td>${corso.Ora}</td>
-                                <td>${corso.Corso}</td>
-                            </tr>`;
-                    })
-                    console.log(html);
-
-                    $(".curses table tbody").html(html);
-                },
-                error: function(data,status,error){
-                    alert("errore del server!");
-                    console.error(error);
-                }
-            });
-        });
-    </script>
+    <table class="table table-striped" id="presentation" border="1">
+        <thead>
+            <tr>
+                <th>lingua</th>
+                <th>livello</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
 </div>
+<script>
+    $(function(){
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=guide",
+            dataType: "json",
+            success: function(data){
+                let html='';
+               
+                data.guide.sort(function(a,b){
+                    if(a>b){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                });
+                html +=`
+                    <option selected disabled >guide</option>`;
+                data.guide.forEach(function(guida){
+                    html +=`
+                        <option value="${guida.email}">${guida.email}</option>`;
+                })
+                $("#guide").html(html);
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        });
+    });
+    $("#guide").change("change",function() {
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=datiGuida&email="+$("#guide").val(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                let html='';
+                data.info.forEach(function(inf){
+                    html +=`
+                        <tr>
+                            <td>${inf.lingua}</td>
+                            <td>${inf.livello}</td>
+                        </tr>`;
+                })
+                $("#presentation tbody").html(html);
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        });
+    });
+
+</script>
