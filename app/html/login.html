@@ -1,13 +1,98 @@
 
-<div>
+<div class="text-xl-left">
     <title>login</title>
     <h1>login</h1>
-    <form action="php/POST.php" method="POST">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" value="login">
-    </form>
+
+    <input type="email" name="username" placeholder="username">
+    <input type="password" name="passwordLog" placeholder="password">
+    <input type="submit" id="login" value="login">
+    
+    <p>o registrati nel sito</p>
+    
+    <input type="text" id="name" name="name" placeholder="name">
+    <input type="text" id="surname" name="surname" placeholder="surname"><br> <br>
+    <input type="tel" id="tel" name="tel" placeholder="phone">
+    <input type="email" id="username" name="username" placeholder="username">
+    <input type="password" id="password" name="password" placeholder="password">
+    <select name="lingue" id="lingue"></select>
+    <button id="register">registrati</button>    
 </div>
 
+<script>
+    $(function(){
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=lingue",
+            dataType: "json",
+            success: function(data){
+                console.log("sto per mostrare le lingue");
+                console.log(data.lingue);
+                let html='';
+                //ordina data.lingue in modo che inglese sia il primo
+                data.lingue.sort(function(a,b){
+                    if(a.nome=="inglese"){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                });
+                html +=`
+                    <option selected disabled > inserisci la tua lingua prefetia </option>`;
+                data.lingue.forEach(function(lingua){
+                    html +=`
+                        <option value="${lingua.nome}">${lingua.nome}</option>`;
+                })
+                $("#lingue").html(html);
+            },
+            error: function(data,status,error){
+                alert(data.error);
+                console.error(error);
+            }
+        });
+    });
+    $("#login").click(function(){
+        $.ajax({
+            type:"POST",
+            url: "php/POST.php",
+            data: "request=login&username="+$("#username").val()+"&password="+$("#passwordLog").val(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                if(data.result){
+                    alert("login effettuato");
+                }else{
+                    alert("username o password errati"); 
+                }
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        });
+    });
+
+    $("#register").click(function(){
+        alert($("#name").val());
+        $.ajax({
+            type:"POST",
+            url: "php/POST.php",
+            data: "request=register&name="+$("#name").val()+"&surname="+$("#surname").val()+"&tel="+$("#tel").val()+"&username="+$("#username").val()+"&password="+$("#password").val()+"&lingua="+$("#lingue").val(),
+            dataType: "json",
+            success: function(data){
+                console.log(data);
+                if(data.result){
+                    alert("registrazione effettuata");
+                }else{
+                    alert("username già in uso"); 
+                }
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        });
+    });
+</script>
  
 

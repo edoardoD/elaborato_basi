@@ -3,7 +3,8 @@
     require_once "globals.php";
 
     $requests = [
-        'login' => login()  
+        'login' => login,
+        'register' => register
     ];
     if(isset($_POST['request'])){
         if(array_key_exists($_POST['request'], $requests)){
@@ -30,7 +31,9 @@
             if($result){
                 $row= mysqli_fetch_assoc($result);
                 if($row){
-                    die(json_encode(["result" => true, "user" => $row]));
+                    session_start();
+                    $_SESSION['username'] = $row['email'];
+                    die(json_encode(["result" => true, "username" => $row['email']]));
                 }
                 else{
                     die(json_encode(["result"=>false, "error"=>"username o password errati"]));
@@ -38,6 +41,37 @@
             }
             else{
                 die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+    }
+
+    function register() {
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+
+            $email = $_POST['username'];
+            $nome = $_POST['name'];
+            $cognome = $_POST['surname'];
+            $password = $_POST['password'];
+            $nazionalita = $_POST['nazionalita'];
+            $telefono = $_POST['tel'];
+            $lingua = $_POST['lingua'];    
+            
+            $query = "INSERT INTO CLIENTI (email, nome, cognome, password, nazionalita, telefono, lingua) 
+                    VALUES ('$email', '$nome', '$cognome', '$password', '$nazionalita', '$telefono','$lingua')";
+            
+
+            $result= mysqli_query($conn,$query);
+            if($result){
+                die(json_encode(["result" => true, "msg"=>"registrazione avvenuta con successo"]));
+            }
+            else{
+                $str = "errore nella query".$email." ".$nome." ".$cognome." ".$password." ".$nazionalita." ".$telefono." ".$lingua;
+                die(json_encode(["result"=>false, "error"=> $str]));
             }
         }
         mysqli_close($conn);

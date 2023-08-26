@@ -2,40 +2,23 @@
     
     require_once "jsonHeader.php";
     require_once "globals.php";
-     $requests = [
-        'curses' => curses(),  
-    ];
 
-    if(isset($_GET['request'])){
-        if(array_key_exists($_GET['request'], $requests)){
-            $requests[$_GET['request']]();
-        }
-        else{
-            die(json_encode(["result"=>false, "error"=>"richiesta non valida"]));
-        }
-    }
-    else{
-        die(json_encode(["result"=>false, "error"=>"nessun parametro impostato"]));
-    }
-
-    function curses(){
+    function lingue(){
         $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
         if (!$conn){
             die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
         }
         else{
-            $corsi=[];
-            $query = "SELECT Giorno.Nome AS Giorno, Planning.Ora AS Ora, Corso.Nome AS Corso
-                      FROM Giorno JOIN (Planning JOIN Corso ON Planning.ID_Cor= Corso.ID) ON Giorno.ID= Planning.Day
-                      ORDER BY (Giorno.ID) ";
+            $lingue=[];
+            $query = "SELECT * FROM LINGUE";
             $result= mysqli_query($conn,$query);
             if($result){
                 $row= mysqli_fetch_assoc($result);
                 while($row){
-                    $corsi[]= $row;
+                    $lingue[]= $row;
                     $row= mysqli_fetch_assoc($result);
                 }  
-                die(json_encode(["result" => true, "corsi" => $corsi]));
+                die(json_encode(["result" => true, "lingue" => $lingue]));
             }
             else{
                 die(json_encode(["result"=>false, "error"=>"errore nella query"]));
@@ -43,6 +26,107 @@
         }
         mysqli_close($conn);
     }
+
+    function visite(){
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+            $lingua = $_GET['lingua'];
+            $lingua = mysqli_real_escape_string($conn, $lingua);
+            $visite=[];
+            $query = "SELECT VISITE.nome, EVENTI.data,GRUPPI.ora,VISITE.descrizione
+            FROM VISITE, EVENTI,GRUPPI
+            WHERE VISITE.nome = EVENTI.visita AND GRUPPI.id_evento= EVENTI.Id AND GRUPPI.lingua = '$lingua'";
+            $result= mysqli_query($conn,$query);
+            if($result){
+                $row= mysqli_fetch_assoc($result);
+                while($row){
+                    $visite[]= $row;
+                    $row= mysqli_fetch_assoc($result);
+                }  
+                die(json_encode(["result" => true, "visite" => $visite]));
+            }
+            else{
+                die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+    }
+
+    function guide(){
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+            $lingua = $_GET['lingua'];
+            $lingua = mysqli_real_escape_string($conn, $lingua);
+            $guide=[];
+            $query = "SELECT  GUIDE.email FROM GUIDE";
+            $result= mysqli_query($conn,$query);
+            if($result){
+                $row= mysqli_fetch_assoc($result);
+                while($row){
+                    $guide[]= $row;
+                    $row= mysqli_fetch_assoc($result);
+                }  
+                die(json_encode(["result" => true, "guide" => $guide]));
+            }
+            else{
+                die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+    }
+    function datiGuida(){
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+            $email = $_GET['email'];
+            $email = mysqli_real_escape_string($conn, $email);
+            $competenze=[];
+            $query = "SELECT C.lingua, C.livello FROM COMPETENZE as C WHERE guida = '$email'";
+            $result= mysqli_query($conn,$query);
+            if($result){
+                $row= mysqli_fetch_assoc($result);
+                while($row){
+                    $competenze[]= $row;
+                    $row= mysqli_fetch_assoc($result);
+                }  
+                die(json_encode(["result" => true, "info" => $competenze]));
+            }
+            else{
+                die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+    }
+    
+    $requests = [
+        "visite"=> visite,
+        "lingue" => lingue,
+        "guide" => guide,
+        "datiGuida" => datiGuida
+    ];
+
+    if(isset($_GET['request'])){
+        $key = $_GET['request'];
+        if(array_key_exists($key, $requests)){
+            $requests[$key]();
+        }
+        else{
+            die(json_encode(["result"=>false, "error"=>"richiesta $key non gestibile dal server"]));
+        }
+    }
+    else{
+        die(json_encode(["result"=>false, "error"=>"nessun parametro impostato"]));
+    }
+
+    
 ?>
 
 

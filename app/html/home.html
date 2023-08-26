@@ -1,1 +1,84 @@
-<p>ciaooo sono la home</p>
+<h1>CONOSCI SCRUTA IMPARA </h1>
+<br><br> <p>valuta la tua prossima avventura</p>
+<div class="div">
+    <label for="lingue">scegli una lingua </label>
+    <select name="lingue" id="lingue">
+    </select>
+
+    <table class="table table-striped"  id="presentation" border="1" >
+        <thead>
+            <tr>
+                <th>visita</th>
+                <th>data</th>
+                <th>ora</th>
+                <th>descrizione</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript" src="../js/function.js"></script>
+
+<script>
+    $(function(){
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=lingue",
+            dataType: "json",
+            success: function(data){
+                console.log("sto per mostrare le lingue");
+                console.log(data.lingue);
+                let html='';
+                //ordina data.lingue in modo che inglese sia il primo
+                data.lingue.sort(function(a,b){
+                    if(a.nome=="inglese"){
+                        return -1;
+                    }else{
+                        return 1;
+                    }
+                });
+                html +=`
+                    <option selected disabled >lista delle lingue </option>`;
+                data.lingue.forEach(function(lingua){
+                    html +=`
+                        <option value="${lingua.nome}">${lingua.nome}</option>`;
+                })
+                $("#lingue").html(html);
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        });
+    });
+    $("#lingue").change("change",function() {
+       $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=visite&lingua="+$("#lingue").val(),
+            dataType: "json",
+            success: function(data){
+                console.log(data.visite);
+                let html='';
+                data.visite.forEach(function(visita){
+                    html +=`
+                        <tr>
+                            <td>${visita.nome}</td>
+                            <td>${visita.data}</td>
+                            <td>${visita.ora}</td>
+                            <td>${visita.descrizione}</td>
+                        </tr>`;
+                })
+                console.log(html);
+                $("#presentation tbody").html(html);
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
+        }); 
+    });
+</script>
