@@ -105,12 +105,40 @@
         }
         mysqli_close($conn);
     }
-    
+    function dashboard(){
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+            $lingua = $_GET['lingua'];
+            $visite=[];
+            $query = "select V.descrizione, E.visita,E.data,G.ora, G.id as gruppo,E.prezzo
+            from VISITE as V, EVENTI as E, GRUPPI G
+            WHERE V.nome = E.visita  AND G.id_evento = E.Id AND G.lingua = '$lingua'
+            and CURRENT_DATE< E.data 
+            ORDER BY `E`.`data` ASC LIMIT 10;";
+            $result= mysqli_query($conn,$query);
+            if($result){
+                $row= mysqli_fetch_assoc($result);
+                while($row){
+                    $visite[]= $row;
+                    $row= mysqli_fetch_assoc($result);
+                }  
+                die(json_encode(["result" => true, "visite" => $visite]));
+            }
+            else{
+                die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+    }
     $requests = [
         "visite"=> visite,
         "lingue" => lingue,
         "guide" => guide,
-        "datiGuida" => datiGuida
+        "datiGuida" => datiGuida,
+        "dashboard" => dashboard
     ];
 
     if(isset($_GET['request'])){

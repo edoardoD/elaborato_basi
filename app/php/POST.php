@@ -26,14 +26,16 @@
         else{
             $username = $_POST['username'];
             $password = $_POST['password'];
-            $query = "SELECT * FROM Utente WHERE Username = '$username' AND Password = '$password'";
+            $query = "SELECT * FROM CLIENTI WHERE email = '$username' AND Password = '$password'";
             $result= mysqli_query($conn,$query);
             if($result){
                 $row= mysqli_fetch_assoc($result);
                 if($row){
+                    session_unset();
                     session_start();
-                    $_SESSION['username'] = $row['email'];
-                    die(json_encode(["result" => true, "username" => $row['email']]));
+                    $_SESSION['user'] = $row['email'];
+                    $_SESSION['lingua'] = $row['lingua'];
+                    die(json_encode(["result" => true, "hi" => "ben arrivayto ".$_SESSION['user']]));
                 }
                 else{
                     die(json_encode(["result"=>false, "error"=>"username o password errati"]));

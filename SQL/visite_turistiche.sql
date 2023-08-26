@@ -64,9 +64,9 @@ create table GRUPPI (
      constraint IDGRUPPO primary key (id))ENGINE=InnoDB;
 
 create table BIGLIETTI (
-     nome char(20) not null,
-     comgnome char(20) not null,
-     eta int not null,
+     nome char(20),
+     comgnome char(20),
+     eta int,
      id int not null AUTO_INCREMENT,
      gruppo int not null,
      ordine int,

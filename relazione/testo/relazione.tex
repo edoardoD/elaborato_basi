@@ -767,7 +767,7 @@ esterno (quelle generate da entità indipendenti per così dire). Una volta iniz
 ho formulate query per inserire i dati nelle tabelle che avevano riferimenti esterni
 in modo da poter inserire i dati in modo corretto.\\
 %\subsection*{popolamento della tabella COMPETENZE}
-\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella \textbf{COMPETENZE}}]
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={popolamento della tabella \textbf{COMPETENZE} \ref{op:competenze}}]
 INSERT INTO COMPETENZE(guida,lingua,livello)
 SELECT 
 	g.email,
@@ -842,6 +842,93 @@ Poi, uso la funzione FLOOR per arrotondare il numero casuale generato da RAND
 al multiplo inferiore di 900. Infine, uso la funzione SEC\_TO\_TIME per convertire
 il numero di secondi in un formato orario.
 
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={operazione \ref{op:aggiuntaGruppo}}]
+DELIMITER //
+	CREATE TRIGGER genera_biglietti AFTER INSERT ON GRUPPI
+	FOR EACH ROW
+	BEGIN
+	    DECLARE i INT DEFAULT 0;
+	    WHILE i < 5 DO
+	        INSERT INTO BIGLIETTI (eta, gruppo) VALUES (
+	            NEW.id -- id del gruppo appena inserito
+	        );
+	        SET i = i + 1;
+	    END WHILE;
+	END //
+DELIMITER ;
+-- inserisco il nuovo gruppo nella tabella GRUPPI, verificando che lingua, id_guida e id_evento siano presenti nelle rispettive tabelle
+INSERT INTO GRUPPI (ora, max_persone, min_persone, lingua, id_guida, id_evento) VALUES (
+    '10:00:00',
+    20,
+    10,
+    (SELECT nome FROM LINGUE WHERE nome = 'Italiano'), -- subquery per la lingua
+    (SELECT email FROM GUIDE WHERE email = 'guida1@email.com'), -- subquery per la guida
+    (SELECT Id FROM EVENTI WHERE Id = 1) -- subquery per l'evento
+);
+\end{lstlisting}
+Per rispettare le specifiche imposte ho creato un trigger che inserisce 5 biglietti.
+Un trigger è una procedura speciale che viene eseguita automaticamente quando si
+verifica un determinato evento sul database, come l’inserimento, la modifica o
+la cancellazione di un record. Un trigger può essere usato per implementare dei
+vincoli di integrità, per registrare delle modifiche, per generare dei valori
+automatici o per eseguire delle azioni correlate.
+
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={operazione \textbf{Acquisto biglietto per un determinato evento e
+	valutazione sconto} \ref{op:acquisto_biglietto}}]
+-- Assumiamo che il cliente voglia acquistare un biglietto per l'evento con Id = 1 e che abbia 25 anni
+-- Assumiamo anche che il prezzo base dell'evento sia 50 euro
+
+-- Troviamo la fascia di sconto corrispondente all'eta del cliente
+SELECT fascia, percentuale FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1;
+
+-- Calcoliamo il prezzo scontato del biglietto
+SELECT 50 * (1 - percentuale / 100) AS prezzo_scontato FROM SCONTI WHERE fascia = (
+	SELECT fascia FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1
+);
+
+-- Inseriamo il biglietto nella tabella BIGLIETTI, associandolo al gruppo con la lingua preferita dal cliente
+INSERT INTO BIGLIETTI (eta, gruppo, ordine) VALUES (
+	25, -- eta del cliente
+	(SELECT id FROM GRUPPI WHERE lingua = (SELECT lingua FROM CLIENTI WHERE email = 'cliente@email.com') AND id_evento = 1 LIMIT 1), -- id del gruppo con la lingua preferita
+	NULL -- ordine non ancora effettuato
+);
+
+-- Inseriamo l'ordine nella tabella ORDINI, associandolo al cliente e al pagamento
+INSERT INTO ORDINI (prezzo, cliente, pagamento) VALUES (
+	(SELECT prezzo_scontato FROM SCONTI WHERE fascia = (
+		SELECT fascia FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1
+	)), -- prezzo scontato del biglietto
+	'cliente@email.com', -- email del cliente
+	(SELECT id FROM PAGAMENTI WHERE metodo = 'Carta di credito' AND n_carta = 1234567890123456) -- id del pagamento con carta di credito
+);
+
+-- Aggiorniamo il biglietto inserendo l'id dell'ordine appena effettuato
+UPDATE BIGLIETTI SET ordine = (SELECT MAX(id) FROM ORDINI) WHERE id = (SELECT MAX(id) FROM BIGLIETTI);
+	
+\end{lstlisting}
+
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={operazione \textbf{Biglietti Invenduti} \ref{op:biglietti_invenduti}}]
+-- Assumiamo che l'evento di interesse abbia Id = 1
+
+-- Selezioniamo i biglietti che non hanno un ordine associato e che appartengono a un gruppo dell'evento con Id = 1
+SELECT * FROM BIGLIETTI WHERE ordine IS NULL AND gruppo IN (
+    SELECT id FROM GRUPPI WHERE id_evento = 1
+);
+\end{lstlisting}
+
+\begin{lstlisting}[style=codeStyle,language=SQL,caption={operazione \textbf{Evento che ha venduto di piu' a fini statistici } \ref{op:Vendite_annuali}}]
+-- Assumiamo che l'anno commerciale finisca il 31 dicembre
+-- Assumiamo anche che il prezzo dei biglietti sia uguale per tutti gli eventi
+
+-- Contiamo il numero di biglietti venduti per ogni evento nell'anno commerciale
+SELECT id_evento, COUNT(*) AS biglietti_venduti FROM BIGLIETTI WHERE ordine IS NOT NULL AND data <= '2023-12-31' GROUP BY id_evento;
+
+-- Troviamo l'evento con il maggior numero di biglietti venduti
+SELECT id_evento, biglietti_venduti FROM (
+	SELECT id_evento, COUNT(*) AS biglietti_venduti FROM BIGLIETTI WHERE ordine IS NOT NULL AND data <= '2023-12-31' GROUP BY id_evento
+) AS T ORDER BY biglietti_venduti DESC LIMIT 1;
+	
+\end{lstlisting}
 \chapter{Progettazione dell'applicazione}
 L'applicazione è una web app che deve permettere ai visitatiori
 del sito di registrarsi consultare i vari eventi che più
@@ -850,6 +937,25 @@ in un gruppo.
 In questa versione embrionale verranno utilizzati componenti grafici basilari
 come tra l'altro è richiesto dalla consegna.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../resources/img/home.png}
+	\caption{l'utente puo' visitare la home con tutte le visite disponibili e registrarsi}
+	\label{fig:homePage}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{../resources/img/login.png}
+	\caption{l'utente puo' registrarsi o effettuare il login}
+	\label{fig:registrazione}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{../resources/img/dashboard.png}
+	\caption{selezione all'acquisto di un biglietto}
+	\label{fig:dashBoard}
+\end{figure}
 \appendix
 \chapter{Codice per la creazione delle tabelle \label{A:CreateTable}}
 \lstinputlisting[style=codeStyle, language=SQL,caption={si noti dalla linea 90 l'alterazione delle tabelle una volta create per gestire le relazioni definite nel report}]{../../SQL/visite_turistiche.sql}
