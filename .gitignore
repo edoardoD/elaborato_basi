@@ -3,3 +3,4 @@ relazione/testo/*
 .vscode/*
 !*.json
 esempio.pdf
+!relazione/testo/relazione.pdf
