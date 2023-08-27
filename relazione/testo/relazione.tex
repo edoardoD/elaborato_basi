@@ -22,6 +22,7 @@
 \usepackage{setspace}
 \usepackage{ulem}
 \usepackage{float}
+\usepackage{tocloft}
 
 \lstdefinestyle{codeStyle}{
     basicstyle=\small\ttfamily,
@@ -64,6 +65,8 @@
 % Reset the rowcntr counter at each new tabular
 \AtBeginEnvironment{tabular}{\setcounter{rowcntr}{0}}
 
+\setlength{\cftbeforesecskip}{0pt} % Riduce lo spazio verticale prima delle sezioni
+\setlength{\cftaftertoctitleskip}{0pt} % Riduce lo spazio verticale dopo il titolo dell'indice
 
 \graphicspath{{../resources/img}}
 \title{Elaborato Basi di Dati}
@@ -71,8 +74,8 @@
 \date{}
 \begin{document}
 \maketitle
-\titlepage
 \mbox{\thispagestyle{empty}}
+\titlepage
 \tableofcontents{\thispagestyle{empty}}
 \setcounter{page}{0}
 
