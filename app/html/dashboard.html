@@ -18,7 +18,10 @@ genera una query che data la lingua preferita vengano mostrati i primi tre bigli
 
         </tbody>
     </table>
-    <input type="submit" id="compra" value="compra" class="btn">
+    <div class="campiBiglietto"></div>
+    <input type="submit" id="compra" value="compra">
+    <select name="pagamento" id="pagamento"></select>
+   
 </body>
 
 
@@ -47,6 +50,26 @@ genera una query che data la lingua preferita vengano mostrati i primi tre bigli
                         <option value="${lingua.nome}">${lingua.nome}</option>`;
                 })
                 $("#lingue").html(html);
+            },
+            error: function(data,status,error){
+                alert(data.error);
+                console.error(error);
+            }
+        });
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=tipiPagamento",
+            dataType: "json",
+            success: function(data){
+                console.log("sto per mostrare i pagamenti");
+                console.log(data.pagamenti);
+                let html='';
+                data.pagamenti.forEach(function(pagamento){
+                    html +=`
+                        <option value="${pagamento.nome}">${pagamento.nome}</option>`;
+                })
+                $("#pagamento").html(html);
             },
             error: function(data,status,error){
                 alert(data.error);
@@ -85,24 +108,59 @@ genera una query che data la lingua preferita vengano mostrati i primi tre bigli
             }
         });
     });
-   
+
 
     // Supponiamo che le checkbox abbiano la classe "dynamic-checkbox"
     $(document).on("change", ".dynamic-checkbox", function() {
       // Se la checkbox è stata selezionata
         if (this.checked) {
             $(".dynamic-checkbox").not(this).prop("disabled", true);
+            html = `
+                <input type="text" name="nome" id="nome" placeholder="nome">
+                <input type="text" name="cognome" id="cognome" placeholder="cognome">
+                <label for="eta">eta'</label>
+                <input type="number" name="eta" id="eta placeholder="eta">`;
+            $(".campiBiglietto").html(html);
         } else {
             $(".dynamic-checkbox").prop("disabled", false);
           // Altrimenti, abilita tutte le checkbox
         }
+
     });
     
     $("#compra").click(function(){
-        let gruppi=[];
-        $(".dynamic-checkbox").checked(function(){
-            
-            console.log(this.val());
+        let cheked;
+        $(".dynamic-checkbox").each(function() {
+            // Se la checkbox è selezionata
+            if ($(this).is(":checked")) {
+              // Ottieni il valore della checkbox
+              checked = $(this).val();
+              // Stampa in console il valore
+              console.log("Selezionato: " + checked);
+            }
+        });
+        $.ajax({
+            type:"GET",
+            url: "php/GET.php",
+            data: "request=acquista&bigliettoGruppo="+checked+"&nome="+$("#nome").val()+"&cognome="+$("#cognome").val()+"&eta="+$("#eta").val(),
+            dataType: "json",
+            success: function(data){
+                console.log($("#nome").val());
+                console.log(data.visite);
+                let html='';
+                
+                if(data.result){
+                    alert("acquisto effettuato");
+                }else{
+                    alert("acquisto non effettuato"+data.msg);
+                }
+                
+                $("#presentation tbody").html(html);
+            },
+            error: function(data,status,error){
+                alert("errore del server!");
+                console.error(error);
+            }
         });
     });
 

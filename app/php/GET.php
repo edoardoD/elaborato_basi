@@ -133,12 +133,35 @@
         }
         mysqli_close($conn);
     }
+    function bigliettoGruppo(){
+        $conn = mysqli_connect($GLOBALS['host'],$GLOBALS['user'],$GLOBALS['password'],$GLOBALS['dbName']);
+        if (!$conn){
+            die(json_encode(["result"=>false,"error"=>"connessione non riuscita"]));
+        }
+        else{
+            //step 1: creare un ordine
+            $id = $_GET['bigliettoGruppo'];
+            $id = mysqli_real_escape_string($conn, $id);
+            $query = "INSERT INTO ORDINI (id_gruppo) values ('$id')";
+            $result= mysqli_query($conn,$query);
+            if($result){
+                $row= mysqli_fetch_assoc($result);
+                die(json_encode(["result" => true, "gruppo" => $row]));
+            }
+            else{
+                die(json_encode(["result"=>false, "error"=>"errore nella query"]));
+            }
+        }
+        mysqli_close($conn);
+
+    }
     $requests = [
         "visite"=> visite,
         "lingue" => lingue,
         "guide" => guide,
         "datiGuida" => datiGuida,
-        "dashboard" => dashboard
+        "dashboard" => dashboard,
+        "acquista" => bigliettoGruppo
     ];
 
     if(isset($_GET['request'])){

@@ -882,9 +882,11 @@ automatici o per eseguire delle azioni correlate.
 SELECT fascia, percentuale FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1;
 
 -- Calcoliamo il prezzo scontato del biglietto
-SELECT 50 * (1 - percentuale / 100) AS prezzo_scontato FROM SCONTI WHERE fascia = (
-	SELECT fascia FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1
-);
+SELECT (SELECT prezzo from EVENTI WHERE id = 200) * (1 - percentuale / 100) AS prezzo_scontato 
+FROM SCONTI WHERE fascia = (SELECT fascia 
+                            FROM SCONTI 
+                            WHERE eta_soglia <= 25 
+                            ORDER BY eta_soglia DESC LIMIT 1);
 
 -- Inseriamo il biglietto nella tabella BIGLIETTI, associandolo al gruppo con la lingua preferita dal cliente
 INSERT INTO BIGLIETTI (eta, gruppo, ordine) VALUES (
@@ -895,15 +897,17 @@ INSERT INTO BIGLIETTI (eta, gruppo, ordine) VALUES (
 
 -- Inseriamo l'ordine nella tabella ORDINI, associandolo al cliente e al pagamento
 INSERT INTO ORDINI (prezzo, cliente, pagamento) VALUES (
-	(SELECT prezzo_scontato FROM SCONTI WHERE fascia = (
-		SELECT fascia FROM SCONTI WHERE eta_soglia <= 25 ORDER BY eta_soglia DESC LIMIT 1
-	)), -- prezzo scontato del biglietto
-	'cliente@email.com', -- email del cliente
+	(SELECT (SELECT prezzo from EVENTI WHERE id = 200) * (1 - percentuale / 100) AS prezzo_scontato 
+	FROM SCONTI WHERE fascia = (SELECT fascia 
+								FROM SCONTI 
+								WHERE eta_soglia <= 25 
+								ORDER BY eta_soglia DESC LIMIT 1)), -- prezzo scontato del biglietto
+	'edo@dodo.com', -- email del cliente
 	(SELECT id FROM PAGAMENTI WHERE metodo = 'Carta di credito' AND n_carta = 1234567890123456) -- id del pagamento con carta di credito
 );
 
 -- Aggiorniamo il biglietto inserendo l'id dell'ordine appena effettuato
-UPDATE BIGLIETTI SET ordine = (SELECT MAX(id) FROM ORDINI) WHERE id = (SELECT MAX(id) FROM BIGLIETTI);
+UPDATE BIGLIETTI SET ordine = (SELECT MAX(id) FROM ORDINI) WHERE id = (SELECT MAX(id) );
 	
 \end{lstlisting}
 
@@ -921,11 +925,17 @@ SELECT * FROM BIGLIETTI WHERE ordine IS NULL AND gruppo IN (
 -- Assumiamo anche che il prezzo dei biglietti sia uguale per tutti gli eventi
 
 -- Contiamo il numero di biglietti venduti per ogni evento nell'anno commerciale
-SELECT id_evento, COUNT(*) AS biglietti_venduti FROM BIGLIETTI WHERE ordine IS NOT NULL AND data <= '2023-12-31' GROUP BY id_evento;
+SELECT  COUNT(*) AS biglietti_venduti 
+FROM BIGLIETTI,GRUPPI,EVENTI 
+WHERE ordine IS NOT NULL AND BIGLIETTI.gruppo = GRUPPI.id 
+	AND GRUPPI.id_evento = EVENTI.Id 
+    AND EVENTI.data <= '2023-12-31' 
+    GROUP BY id_evento;
 
 -- Troviamo l'evento con il maggior numero di biglietti venduti
 SELECT id_evento, biglietti_venduti FROM (
-	SELECT id_evento, COUNT(*) AS biglietti_venduti FROM BIGLIETTI WHERE ordine IS NOT NULL AND data <= '2023-12-31' GROUP BY id_evento
+SELECT id_evento, COUNT(*) AS biglietti_venduti FROM BIGLIETTI WHERE ordine IS
+NOT NULL AND data <= '2023-12-31' GROUP BY id_evento
 ) AS T ORDER BY biglietti_venduti DESC LIMIT 1;
 	
 \end{lstlisting}
@@ -955,6 +965,12 @@ come tra l'altro è richiesto dalla consegna.
 	\includegraphics[width=0.9\textwidth]{../resources/img/dashboard.png}
 	\caption{selezione all'acquisto di un biglietto}
 	\label{fig:dashBoard}
+\end{figure}
+\begin{figure}
+	\centering
+	\includegraphics[width=0.9\textwidth]{../resources/img/dashboard.png}
+	\caption{dalla dashboard personale l'utente puo' acquistare un biglietto}
+	\label{fig:ordine}
 \end{figure}
 \appendix
 \chapter{Codice per la creazione delle tabelle \label{A:CreateTable}}
